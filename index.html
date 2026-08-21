@@ -276,7 +276,7 @@
         </div>
       </div>
 
-      <div id="productGrid" class="product-grid">Loading products...</div>
+      <div id="productGrid" class="product-grid">Loading products from Google Sheet...</div>
     </div>
 
     <!-- About Section -->
@@ -311,7 +311,7 @@
         </div>
       </div>
 
-      <!-- Contact Us Details Block -->
+      <!-- Contact Us Box -->
       <div class="contact-card-box">
         <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
         <p><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> <b>Address:</b> <span id="contactAddress">Chennai</span></p>
@@ -422,15 +422,8 @@
     const HUB_LAT = 13.0033;
     const HUB_LNG = 80.1982;
 
-    const LOCAL_CATALOG = [
-      { id: 'v_tom_naatu', name: 'Tomato Naatu Thakkali (Country Tomato)', category: 'vegetables', inStock: true, discountPercent: 10, image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=500&q=80', variants: [{ unit: '1 kg', price: 38 }, { unit: '500 g', price: 20 }] },
-      { id: 'v_french_beans', name: 'Beans (French Beans)', category: 'vegetables', inStock: true, discountPercent: 10, image: 'https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?auto=format&fit=crop&w=500&q=80', variants: [{ unit: '500 g', price: 45 }, { unit: '250 g', price: 24 }] },
-      { id: 'v_beetroot', name: 'Beetroot', category: 'vegetables', inStock: true, discountPercent: 8, image: 'https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?auto=format&fit=crop&w=500&q=80', variants: [{ unit: '1 kg', price: 50 }, { unit: '500 g', price: 26 }] },
-      { id: 'f_apple', name: 'Royal Gala Apple', category: 'fruits', inStock: true, discountPercent: 15, image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=500&q=80', variants: [{ unit: '1 kg', price: 180 }, { unit: '500 g', price: 95 }] }
-    ];
-
     let appConfig = { whatsappNumber: "987654321" };
-    let products = LOCAL_CATALOG;
+    let products = [];
     let cart = [];
     let toastTimeout;
     
@@ -447,19 +440,24 @@
     function init() {
       startLiveClock();
       startAutoSlider();
-      filterProducts();
       fetchSheetData();
     }
 
     async function fetchSheetData() {
+      const grid = document.getElementById("productGrid");
+      grid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; text-align: center;'>Loading fresh produce from Google Sheet...</p>";
+
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
         
         if (data && data.config) appConfig = data.config;
+        
         if (data && data.products && data.products.length > 0) {
           products = data.products;
           filterProducts();
+        } else {
+          grid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: red;'>No products found in Google Sheet 'Product' tab.</p>";
         }
 
         if (data && data.contacts) {
@@ -471,7 +469,8 @@
           if (data.contacts["Email"]) document.getElementById("contactEmail").innerText = data.contacts["Email"];
         }
       } catch (err) {
-        console.warn("Using fallback configuration.");
+        console.error("Sheet Fetch Error:", err);
+        grid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: red;'>Error connecting to Google Sheet. Check App Script Deployment permissions.</p>";
       }
     }
 
@@ -539,7 +538,7 @@
 
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
-      if (!list || !list.length) { grid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px 0; color: #666;'>No items found in this category.</p>"; return; }
+      if (!list || !list.length) { grid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px 0; color: #666;'>No items found matching criteria.</p>"; return; }
 
       grid.innerHTML = list.map(p => {
         let discPct = p.discountPercent || 0;
