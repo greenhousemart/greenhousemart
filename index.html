@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Green House FreshMart</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #2e7d32;
@@ -20,19 +20,12 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-top: 80px; padding-bottom: 40px; }
 
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      z-index: 1000; padding: 12px 20px;
-    }
+    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.06); z-index: 1000; padding: 12px 20px; }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .brand { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
 
     .search-container { position: relative; flex: 1; max-width: 500px; }
-    .search-container input {
-      width: 100%; padding: 10px 14px 10px 40px; border-radius: 25px;
-      border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 14px;
-    }
+    .search-container input { width: 100%; padding: 10px 14px 10px 40px; border-radius: 25px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 14px; }
     .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #777; font-size: 15px; }
     
     .desktop-nav { display: flex; align-items: center; gap: 22px; }
@@ -51,27 +44,18 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
     }
 
-    .hero-banner-expanded {
-      display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: center;
-      background: linear-gradient(135deg, #ffffff 0%, #f1f8f3 100%);
-      border: 1px solid #e2ece3; border-radius: 24px; padding: 35px 40px; margin-bottom: 35px;
-    }
+    .hero-banner-expanded { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: center; background: linear-gradient(135deg, #ffffff 0%, #f1f8f3 100%); border: 1px solid #e2ece3; border-radius: 24px; padding: 35px 40px; margin-bottom: 35px; }
     .hero-content { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
     .badge-pill { background: var(--accent-light); color: var(--primary); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; border: 1px solid #c8e6c9; }
     .hero-title { font-size: 38px; font-weight: 800; line-height: 1.2; color: var(--text); }
     .hero-title span.highlight { color: var(--accent-orange); }
     .hero-subtitle { font-size: 15px; color: var(--text-muted); line-height: 1.5; max-width: 520px; }
 
-    .hero-actions { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-    .btn-shop-now { background: var(--primary); color: #fff; padding: 12px 28px; border-radius: 25px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; }
-    .btn-our-story { background: #fff; color: var(--text); border: 1px solid #d0dcd2; padding: 12px 24px; border-radius: 25px; font-weight: 600; font-size: 14px; cursor: pointer; }
-
     .hero-slider-container { position: relative; width: 100%; height: 320px; border-radius: 20px; overflow: hidden; }
     .hero-slider-track { display: flex; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
     .slide-item { min-width: 100%; height: 100%; position: relative; }
     .slide-item img { width: 100%; height: 100%; object-fit: cover; }
     .slide-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%); padding: 20px 18px 14px; color: #fff; font-weight: 700; font-size: 15px; }
-
     .slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
     .dot { width: 8px; height: 8px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; cursor: pointer; }
     .dot.active { background: #fff; width: 22px; border-radius: 10px; }
@@ -82,38 +66,57 @@
       .hero-slider-container { height: 230px; }
     }
 
-    .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-    .filter-tabs { display: flex; gap: 8px; }
-    .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 8px 18px; border-radius: 20px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
-    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+    .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 8px 18px; border-radius: 20px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 10px rgba(46, 125, 50, 0.4); }
 
+    /* Product Grid & Glow Effect */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
-    .product-card { background: #fff; border-radius: 14px; overflow: hidden; padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; }
+    .product-card { background: #fff; border-radius: 14px; overflow: hidden; padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.3s; }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 0 18px rgba(46, 125, 50, 0.2); border-color: var(--accent); }
+    
     .product-card img { width: 100%; height: 145px; object-fit: cover; }
-    .discount-badge { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 6px; }
-    .product-card h3 { font-size: 14px; padding: 0 8px; color: #222; margin: 8px 0 4px; }
-    .variant-select { width: calc(100% - 20px); margin: 4px auto 8px; padding: 6px; border-radius: 6px; border: 1px solid #ccc; font-size: 12px; }
+    .discount-badge { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 5;}
+    .product-card h3 { font-size: 14px; padding: 0 8px; color: #222; margin: 8px 0 2px; }
+    .combo-desc { font-size: 11px; color: #666; padding: 0 8px; margin-bottom: 6px; line-height: 1.3; }
+    .variant-select { width: calc(100% - 20px); margin: 4px auto 8px; padding: 6px; border-radius: 6px; border: 1px solid #ccc; font-size: 12px; outline: none; }
+    
+    .price-block { margin-bottom: 8px; }
     .price { font-size: 16px; font-weight: bold; color: var(--primary); }
-    .btn { background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 20px); margin: 0 auto; font-size: 13px; }
+    .original-price { text-decoration: line-through; color: #888; font-size: 12px; margin-left: 6px; }
+    
+    .btn { background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 20px); margin: 0 auto; font-size: 13px; transition: 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
+    .btn:disabled { background: #aaa; cursor: not-allowed; }
 
+    /* Our Story Glow UI */
     .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
-    .story-card { background: #fff; border-radius: 14px; padding: 20px; border-left: 5px solid var(--primary); }
+    .story-card { background: #fff; border-radius: 14px; padding: 22px; border-left: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; }
+    .story-card:hover { box-shadow: 0 0 20px rgba(46, 125, 50, 0.25); transform: translateY(-3px); }
     .story-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
     .story-card p { font-size: 13.5px; color: #555; line-height: 1.6; }
 
     .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; margin: 20px 0 30px; }
-    .owner-card { background: #fff; border-radius: 14px; padding: 20px; text-align: center; border: 1px solid #f0f0f0; }
+    .owner-card { background: #fff; border-radius: 14px; padding: 20px; text-align: center; border: 1px solid #f0f0f0; transition: all 0.3s; }
+    .owner-card:hover { box-shadow: 0 0 15px rgba(46, 125, 50, 0.2); border-color: var(--primary); }
     .owner-card img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; border: 3px solid var(--primary); display: block; }
-    .owner-card h3 { font-size: 15px; color: #111; margin-bottom: 4px; }
+    
+    .promise-card { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f3 100%); border-radius: 14px; padding: 18px; margin-bottom: 25px; text-align: center; border: 1px solid #c8e6c9; }
 
     .contact-card-box { background: #fff; border-radius: 14px; padding: 22px; margin: 30px 0 15px; border: 1px solid #eaeaea; }
 
     footer { background: #1b2e1c; color: #fff; padding: 25px 15px; margin-top: 40px; text-align: center; font-size: 13px; }
     
     .floating-controls { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; }
-    .float-btn { width: 50px; height: 50px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 21px; border: none; cursor: pointer; }
+    .float-btn { width: 50px; height: 50px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 21px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.22); transition: transform 0.2s; }
+    .float-btn:hover { transform: scale(1.08); }
     .home-float { background: var(--primary); }
     .whatsapp-float { background: var(--whatsapp); }
+
+    /* Toast */
+    #toast { visibility: hidden; min-width: 200px; background-color: #2e7d32; color: #fff; text-align: center; border-radius: 8px; padding: 10px; position: fixed; z-index: 2000; right: 20px; top: 90px; opacity: 0; transition: 0.3s; font-size: 13px; font-weight: bold;}
+    #toast.show { visibility: visible; opacity: 1; }
   </style>
 </head>
 <body>
@@ -133,6 +136,8 @@
     </div>
   </header>
 
+  <div id="toast">Item added to cart!</div>
+
   <div class="container">
     <div id="home" class="section active">
       <div class="live-status-bar">
@@ -145,10 +150,6 @@
           <div class="badge-pill">🚚 Same-day delivery across Chennai</div>
           <h1 class="hero-title">Farm fresh <span class="highlight">fruits & veggies,</span> straight to your door.</h1>
           <p class="hero-subtitle">Hand-picked daily, hygienically packed, and delivered fresh — no middlemen, no compromise on quality.</p>
-          <div class="hero-actions">
-            <button class="btn-shop-now" onclick="scrollToProducts()">Shop Now</button>
-            <button class="btn-our-story" onclick="showSection('about')">Our Story</button>
-          </div>
         </div>
 
         <div class="hero-slider-container">
@@ -175,9 +176,10 @@
       </div>
 
       <div class="filter-tabs-container" id="productSectionTitle">
-        <h2 style="font-size: 20px;">Fresh Produce</h2>
+        <h2 style="font-size: 20px;">Buy Fresh Veggies and Fruits</h2>
         <div class="filter-tabs">
           <button class="tab-btn active" onclick="setCategoryFilter('all', this)">All</button>
+          <button class="tab-btn" onclick="setCategoryFilter('combo', this)">Combo Offers <i class="fa-solid fa-fire" style="color:var(--accent-orange)"></i></button>
           <button class="tab-btn" onclick="setCategoryFilter('fruits', this)">Fruits</button>
           <button class="tab-btn" onclick="setCategoryFilter('vegetables', this)">Vegetables</button>
         </div>
@@ -193,16 +195,31 @@
       </div>
     </div>
 
+    <!-- OUR STORY PAGE -->
     <div id="about" class="section">
       <h2 style="color: var(--primary-dark); font-size: 24px; margin-bottom: 6px;">Our Story</h2>
       <div class="about-stories-grid">
         <div class="story-card">
           <h3>🌱 How We Started</h3>
-          <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep.</p>
+          <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep. We started locally with direct customer orders through WhatsApp, focusing on freshness, quality and reliable service.</p>
         </div>
         <div class="story-card">
           <h3>🛒 How We Purchase</h3>
-          <p>We carefully select vegetables and fruits based on freshness and quality directly from local farmers.</p>
+          <p>We carefully select vegetables and fruits based on freshness and quality. We purchase products from trusted local farmers, growers and wholesale markets, choosing fresh produce according to customer demand. This helps us reduce unnecessary storage and provide fresher products.</p>
+        </div>
+        <div class="story-card">
+          <h3>🚚 How We Deliver</h3>
+          <p>Once you place your order through our website or WhatsApp, we confirm the order, carefully pack the products and arrange doorstep delivery within our service area. Our goal is to deliver your order fresh, safely and on time.</p>
+        </div>
+      </div>
+
+      <div class="promise-card">
+        <h3 style="margin-bottom: 6px;">💚 Our Promise</h3>
+        <div class="promise-list">
+          <span>Fresh Products</span> •
+          <span>Fair Pricing</span> •
+          <span>Easy Ordering</span> •
+          <span>Doorstep Delivery</span>
         </div>
       </div>
 
@@ -224,18 +241,21 @@
   </div>
 
   <script>
+    // PUT YOUR DEPLOYED GOOGLE APPS SCRIPT URL HERE
     const API_URL = "https://script.google.com/macros/s/AKfycbyAGxm_zOiS7bXRXCYTcmQzeFV9CMb7EJ82DEq5f5LaWCnS1FmTwAa7u1HdBDYyL4NJKw/exec";
 
     let appConfig = { whatsappNumber: "987654321" };
     let products = [];
+    let cart = [];
     let currentCategory = "all";
     let currentSlide = 0;
+    let toastTimeout;
 
     document.addEventListener("DOMContentLoaded", function() {
       startLiveClock();
       startAutoSlider();
       loadFastCache();
-      fetchLiveSheetData();
+      fetchLiveSheetData(); // Guaranteed not to block UI
     });
 
     function startLiveClock() {
@@ -246,29 +266,16 @@
       }, 1000);
     }
 
-    function startAutoSlider() {
-      setInterval(() => {
-        currentSlide = (currentSlide + 1) % 3;
-        updateSlider();
-      }, 3500);
-    }
-
+    function startAutoSlider() { setInterval(() => { currentSlide = (currentSlide + 1) % 3; updateSlider(); }, 3500); }
     function goToSlide(index) { currentSlide = index; updateSlider(); }
-
     function updateSlider() {
       const track = document.getElementById("sliderTrack");
       if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
       const dots = document.querySelectorAll(".slider-dots .dot");
-      dots.forEach((dot, idx) => {
-        if (idx === currentSlide) dot.classList.add("active");
-        else dot.classList.remove("active");
-      });
+      dots.forEach((dot, idx) => { if (idx === currentSlide) dot.classList.add("active"); else dot.classList.remove("active"); });
     }
 
-    function scrollToProducts() {
-      document.getElementById("productSectionTitle").scrollIntoView({ behavior: 'smooth' });
-    }
-
+    // Load instantly from browser storage
     function loadFastCache() {
       const cached = localStorage.getItem("ghfm_fast_cache");
       if (cached) {
@@ -282,13 +289,10 @@
       }
     }
 
+    // Async Fetch that will not break/load infinitely
     async function fetchLiveSheetData() {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-
       try {
-        const res = await fetch(API_URL, { signal: controller.signal });
-        clearTimeout(timeoutId);
+        const res = await fetch(API_URL, { method: "GET" });
         const data = await res.json();
         if (data && data.products) {
           products = data.products;
@@ -299,14 +303,13 @@
           localStorage.setItem("ghfm_fast_cache", JSON.stringify(data));
         }
       } catch (err) {
-        console.warn("Fetch timed out or offline. Using local cache.");
+        console.warn("Background fetch failed, keeping local cache active.");
       }
     }
 
     function renderOwners(owners) {
       const container = document.getElementById("ownerContainer");
       if (!owners || !owners.length) return;
-      
       container.innerHTML = owners.map(o => {
         const validPhoto = (o.photo && o.photo.startsWith("http")) ? o.photo : "https://via.placeholder.com/100?text=" + encodeURIComponent(o.name);
         return `
@@ -342,21 +345,100 @@
       renderProducts(filtered);
     }
 
+    // Safe Dynamic Rendering (Fixes Button click & Select issues)
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
-      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products available.</p>"; return; }
+      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1; color:#666;'>No products found in this category.</p>"; return; }
 
-      grid.innerHTML = list.map(p => `
+      grid.innerHTML = list.map(p => {
+        const firstVariant = p.variants[0] || { unit: "1 Unit", price: 0 };
+        const price = firstVariant.price;
+        const mrp = firstVariant.mrp || 0;
+        
+        let priceHtml = `<span class="price" id="price_${p.id}">₹${price}</span>`;
+        if (p.category === 'combo' && mrp > price) {
+          priceHtml += `<span class="original-price" id="origPrice_${p.id}">₹${mrp}</span>`;
+        } else if (p.discountPercent > 0) {
+          const orig = Math.round(price / (1 - (p.discountPercent/100)));
+          priceHtml += `<span class="original-price" id="origPrice_${p.id}">₹${orig}</span>`;
+        } else {
+          priceHtml += `<span class="original-price" id="origPrice_${p.id}"></span>`;
+        }
+
+        return `
         <div class="product-card">
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
           <img src="${p.image}" onerror="this.src='https://via.placeholder.com/150'">
           <h3>${p.name}</h3>
-          <select class="variant-select">
-            ${p.variants.map(v => `<option>${v.unit} - ₹${v.price}</option>`).join('')}
+          ${p.description ? `<div class="combo-desc">${p.description}</div>` : ''}
+          <select id="variant_${p.id}" class="variant-select" onchange="updatePriceDisplay('${p.id}')">
+            ${p.variants.map((v, i) => `<option value="${i}">${v.unit} - ₹${v.price}</option>`).join('')}
           </select>
-          <button class="btn" ${!p.inStock ? 'disabled' : ''}>${p.inStock ? 'Add to Cart' : 'Out of Stock'}</button>
+          <div class="price-block">${priceHtml}</div>
+          <button class="btn" ${!p.inStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.inStock ? 'Add to Cart' : 'Out of Stock'}</button>
         </div>
-      `).join('');
+      `;
+      }).join('');
+    }
+
+    function updatePriceDisplay(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      const selectElem = document.getElementById(`variant_${productId}`);
+      const variant = product.variants[selectElem.value];
+      
+      let priceHtml = `₹${variant.price}`;
+      document.getElementById(`price_${productId}`).innerText = priceHtml;
+      
+      const origElem = document.getElementById(`origPrice_${productId}`);
+      if (!origElem) return;
+
+      if (product.category === 'combo' && variant.mrp > variant.price) {
+        origElem.innerText = `₹${variant.mrp}`;
+      } else if (product.discountPercent > 0) {
+        const orig = Math.round(variant.price / (1 - (product.discountPercent/100)));
+        origElem.innerText = `₹${orig}`;
+      } else {
+        origElem.innerText = '';
+      }
+    }
+
+    // Add To Cart Functionality Fix
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product || !product.inStock) return;
+
+      const selectElem = document.getElementById(`variant_${productId}`);
+      const selectedIndex = selectElem ? parseInt(selectElem.value) : 0;
+      const variant = product.variants[selectedIndex];
+
+      const cartItemId = `${productId}_${variant.unit}`;
+      const existing = cart.find(c => c.cartItemId === cartItemId);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({
+          cartItemId: cartItemId, id: productId, name: product.name,
+          unit: variant.unit, price: variant.price, qty: 1
+        });
+      }
+
+      updateCartBadge();
+      showToast(`${product.name} added to cart!`);
+    }
+
+    function updateCartBadge() {
+      const totalCount = cart.reduce((acc, c) => acc + c.qty, 0);
+      document.querySelectorAll(".cart-badge").forEach(el => el.innerText = totalCount);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove("show"), 2000);
     }
 
     function showSection(id) {
@@ -365,9 +447,12 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Exact fix for Indian Whatsapp Links
     function openWhatsAppChat() {
-      const phoneNum = appConfig.whatsappNumber || "987654321";
-      window.open(`https://wa.me/91${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance with an order.")}`, '_blank');
+      let phoneNum = appConfig.whatsappNumber || "987654321";
+      // ensure no double 91
+      if(phoneNum.length === 10) phoneNum = "91" + phoneNum;
+      window.open(`https://wa.me/${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance.")}`, '_blank');
     }
   </script>
 </body>
