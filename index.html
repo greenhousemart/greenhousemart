@@ -18,41 +18,37 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-top: 75px; }
+    body { background-color: var(--bg); color: var(--text); padding-top: 70px; }
 
-    /* EXACT HEADER: LEFT COMPANY NAME, CENTER SEARCH, RIGHT NAV */
-    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; padding: 10px 20px; }
-    .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+    /* HEADER FIXES FOR CLICKABILITY */
+    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 999; padding: 8px 16px; }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     
-    /* LEFT: COMPANY NAME ONLY */
-    .brand { font-size: 19px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
+    .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
 
-    /* CENTER: SEARCH BAR */
-    .search-container { position: relative; flex: 1; max-width: 480px; margin: 0 auto; }
-    .search-container input { width: 100%; padding: 8px 14px 8px 38px; border-radius: 20px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px; }
-    .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
+    .search-container { position: relative; flex: 1; max-width: 450px; margin: 0 auto; }
+    .search-container input { width: 100%; padding: 8px 12px 8px 36px; border-radius: 20px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13px; }
+    .search-container i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
     
-    /* RIGHT: MENU (HOME, OUR STORY, CART) */
-    .desktop-nav { display: flex; align-items: center; gap: 20px; }
-    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; white-space: nowrap; }
-    .desktop-nav a i { font-size: 15px; color: #333; }
-    .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
+    .desktop-nav { display: flex; align-items: center; gap: 16px; }
+    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 5px; position: relative; white-space: nowrap; }
+    .desktop-nav a i { font-size: 14px; color: #333; }
+    .cart-badge { background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
 
-    /* MOBILE UI PRESERVED STYLES */
+    /* RESPONSIVE MOBILE LAYOUT */
     @media (max-width: 768px) {
-      body { padding-top: 105px; }
-      header { padding: 8px 12px; }
-      .header-container { display: grid; grid-template-columns: 1fr auto; gap: 8px 10px; align-items: center; }
-      .brand { font-size: 15px; grid-column: 1; }
-      .desktop-nav { grid-column: 2; gap: 12px; }
+      body { padding-top: 110px; }
+      header { padding: 8px 10px; }
+      .header-container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+      .brand { font-size: 15px; }
+      .desktop-nav { gap: 10px; }
       .desktop-nav a { font-size: 12px; }
       .desktop-nav a i { font-size: 13px; }
-      .search-container { grid-column: 1 / -1; width: 100%; max-width: 100%; margin-top: 2px; }
-      .search-container input { padding: 7px 12px 7px 34px; font-size: 12.5px; }
-      .search-container i { left: 12px; font-size: 13px; }
+      .search-container { order: 3; flex: 100%; width: 100%; max-width: 100%; margin-top: 4px; }
+      .search-container input { padding: 6px 12px 6px 32px; font-size: 12px; }
     }
 
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 12px 30px; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 12px 30px; position: relative; z-index: 1; }
     .section { display: none; }
     .section.active { display: block; }
 
@@ -81,9 +77,9 @@
     .dot.active { background: #fff; width: 18px; border-radius: 10px; }
 
     @media (max-width: 768px) {
-      .hero-banner-expanded { grid-template-columns: 1fr; padding: 16px; gap: 14px; }
-      .hero-title { font-size: 20px; }
-      .hero-slider-container { height: 170px; }
+      .hero-banner-expanded { grid-template-columns: 1fr; padding: 14px; gap: 12px; }
+      .hero-title { font-size: 18px; }
+      .hero-slider-container { height: 160px; }
     }
 
     .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
@@ -91,27 +87,30 @@
     .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
+    /* PRODUCT GRID & CLICKABLE BUTTON FIXES */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
-    .product-card { background: #fff; border-radius: 12px; overflow: hidden; padding-bottom: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.2s; }
+    .product-card { background: #fff; border-radius: 12px; overflow: hidden; padding-bottom: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.2s; z-index: 2; }
     
     .product-card img { width: 100%; height: 120px; object-fit: cover; }
     .discount-badge { position: absolute; top: 8px; left: 8px; background: #e53935; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 5;}
     .product-card h3 { font-size: 13px; padding: 0 6px; color: #222; margin: 6px 0 2px; }
-    .variant-select { width: calc(100% - 16px); margin: 4px auto 6px; padding: 5px; border-radius: 6px; border: 1px solid #ccc; font-size: 11.5px; outline: none; }
+    .variant-select { width: calc(100% - 16px); margin: 4px auto 6px; padding: 5px; border-radius: 6px; border: 1px solid #ccc; font-size: 11.5px; outline: none; background: #fff; cursor: pointer; }
     
     .price-block { margin-bottom: 6px; }
     .price { font-size: 16px; font-weight: 800; color: var(--primary); }
     
-    .btn { background: var(--primary); color: #fff; border: none; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 16px); margin: 0 auto; font-size: 12.5px; transition: 0.2s; }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 16px); margin: 0 auto; font-size: 12.5px; transition: 0.2s; display: block; position: relative; z-index: 10; }
+    .btn:active { transform: scale(0.97); }
     .btn:hover { background: var(--primary-dark); }
     .btn:disabled { background: #aaa; cursor: not-allowed; }
 
+    /* CART & BILL RECEIPT */
     .cart-container-box { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border: 1px solid #e0ebe1; margin-top: 12px; }
     .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #e0e0e0; gap: 8px; }
     .cart-item-info h4 { font-size: 13.5px; color: var(--text); }
     .cart-item-info span { font-size: 11.5px; color: #666; }
     .qty-controls { display: flex; align-items: center; gap: 8px; }
-    .qty-btn { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ccc; background: #f9f9f9; cursor: pointer; font-weight: bold; font-size: 12px; }
+    .qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid #ccc; background: #f9f9f9; cursor: pointer; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; }
 
     .bill-receipt-box { background: #fbfdfb; border: 1px dashed var(--primary); border-radius: 10px; padding: 14px; margin-top: 16px; }
     .bill-title { text-align: center; font-size: 13px; font-weight: 800; color: var(--primary-dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 1px solid #e0e0e0; padding-bottom: 6px; }
@@ -141,35 +140,35 @@
 
     /* OUR STORY PAGE */
     .about-page-wrapper { max-width: 1100px; margin: 0 auto; padding: 10px 0 30px; }
-    .about-main-title { font-size: 26px; font-weight: 800; color: var(--primary-dark); margin-bottom: 20px; border-bottom: 3px solid var(--primary); display: inline-block; padding-bottom: 6px; }
+    .about-main-title { font-size: 24px; font-weight: 800; color: var(--primary-dark); margin-bottom: 18px; border-bottom: 3px solid var(--primary); display: inline-block; padding-bottom: 4px; }
     
-    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 30px; }
-    .story-card { background: #fff; border-radius: 16px; padding: 20px; border-left: 6px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-    .story-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
-    .story-card p { font-size: 13px; color: #444; line-height: 1.5; }
+    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 25px; }
+    .story-card { background: #fff; border-radius: 14px; padding: 18px; border-left: 5px solid var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .story-card h3 { font-size: 15px; color: var(--primary); margin-bottom: 8px; }
+    .story-card p { font-size: 12.5px; color: #444; line-height: 1.5; }
 
-    .team-section-title { font-size: 19px; font-weight: 700; color: #222; margin: 25px 0 14px; border-left: 4px solid var(--accent-orange); padding-left: 10px; }
+    .team-section-title { font-size: 18px; font-weight: 700; color: #222; margin: 20px 0 12px; border-left: 4px solid var(--accent-orange); padding-left: 8px; }
     
-    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 25px; }
-    .owner-card { background: #fff; border-radius: 14px; padding: 18px 12px; text-align: center; border: 1px solid #e0ebe1; box-shadow: 0 3px 10px rgba(0,0,0,0.03); }
-    .owner-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 3px solid var(--primary); display: block; }
-    .owner-card h3 { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
-    .owner-card .designation-text { font-size: 12px; font-weight: 700; color: var(--primary); }
+    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .owner-card { background: #fff; border-radius: 12px; padding: 16px 10px; text-align: center; border: 1px solid #e0ebe1; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .owner-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 8px; border: 3px solid var(--primary); display: block; }
+    .owner-card h3 { font-size: 13.5px; font-weight: 700; color: #111; margin-bottom: 2px; }
+    .owner-card .designation-text { font-size: 11.5px; font-weight: 700; color: var(--primary); }
 
     .policy-box { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e0ebe1; }
     .policy-box h2 { color: var(--primary); font-size: 18px; margin-bottom: 12px; }
     .policy-box ul { margin-left: 16px; margin-bottom: 16px; }
     .policy-box li { font-size: 12.5px; color: #444; line-height: 1.6; margin-bottom: 6px; }
 
-    footer.main-footer { background: var(--primary-dark); color: #e8f5e9; padding: 30px 16px 16px; margin-top: 30px; }
-    .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-    .footer-col h3, .footer-col h4 { font-size: 14px; color: #ffffff; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-    .footer-col p, .footer-col li { font-size: 12px; color: #c8e6c9; line-height: 1.6; list-style: none; }
+    footer.main-footer { background: var(--primary-dark); color: #e8f5e9; padding: 25px 16px 16px; margin-top: 30px; }
+    .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+    .footer-col h3, .footer-col h4 { font-size: 13.5px; color: #ffffff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .footer-col p, .footer-col li { font-size: 11.5px; color: #c8e6c9; line-height: 1.5; list-style: none; }
     .footer-col a { color: #c8e6c9; text-decoration: none; cursor: pointer; }
-    .footer-bottom { max-width: 1280px; margin: 16px auto 0; text-align: center; font-size: 11.5px; color: #a5d6a7; }
+    .footer-bottom { max-width: 1280px; margin: 14px auto 0; text-align: center; font-size: 11px; color: #a5d6a7; }
 
     .floating-controls { position: fixed; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-    .float-btn { width: 44px; height: 44px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; border: none; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+    .float-btn { width: 42px; height: 42px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; border: none; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
     .home-float { background: var(--primary); }
     .whatsapp-float { background: var(--whatsapp); }
 
@@ -179,23 +178,23 @@
 </head>
 <body>
 
-  <!-- HEADER STRUCTURE -->
+  <!-- FIXED HEADER -->
   <header>
     <div class="header-container">
       
-      <!-- LEFT: COMPANY NAME -->
+      <!-- LEFT BRAND -->
       <a class="brand" onclick="showSection('home')">
         <i class="fa-solid fa-leaf"></i>
         <span>Green House FreshMart</span>
       </a>
 
-      <!-- CENTER: SEARCH BAR -->
+      <!-- CENTER SEARCH BAR -->
       <div class="search-container">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
       </div>
 
-      <!-- RIGHT: MENU (HOME, OUR STORY, CART) -->
+      <!-- RIGHT NAV -->
       <nav class="desktop-nav">
         <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span>Home</span></a>
         <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span>Our Story</span></a>
@@ -249,7 +248,7 @@
       </div>
 
       <div class="filter-tabs-container" id="productSectionTitle">
-        <h2 style="font-size: 17px;">Buy Fresh Veggies and Fruits</h2>
+        <h2 style="font-size: 16px;">Buy Fresh Veggies and Fruits</h2>
         <div class="filter-tabs">
           <button class="tab-btn active" onclick="setCategoryFilter('all', this)">All</button>
           <button class="tab-btn" onclick="setCategoryFilter('combo', this)">Combo Offers <i class="fa-solid fa-fire" style="color:var(--accent-orange)"></i></button>
@@ -291,7 +290,7 @@
 
     <!-- CART PAGE -->
     <div id="cart" class="section">
-      <h2 style="font-size: 20px; color: var(--text);">Your Shopping Cart</h2>
+      <h2 style="font-size: 18px; color: var(--text);">Your Shopping Cart</h2>
       <div id="cartItems" class="cart-container-box">Your cart is empty.</div>
     </div>
 
@@ -363,7 +362,6 @@
     const HUB_LAT = 12.9961;
     const HUB_LNG = 80.1983;
 
-    // Completely empty - Fetching live from Google Sheet
     let appConfig = { whatsappNumber: "", merchantUpiId: "" };
     let products = [];
     let cart = [];
@@ -427,7 +425,7 @@
         const des = (o.designation || "").toLowerCase();
         const cardHtml = `
           <div class="owner-card">
-            <img src="${o.photo || 'https://via.placeholder.com/90'}" alt="${o.name}" onerror="this.src='https://via.placeholder.com/90'">
+            <img src="${o.photo || 'https://via.placeholder.com/80'}" alt="${o.name}" onerror="this.src='https://via.placeholder.com/80'">
             <h3>${o.name}</h3>
             <div class="designation-text">${o.designation}</div>
           </div>
@@ -493,23 +491,33 @@
       }
     }
 
+    /* FIXED ADD TO CART FUNCTION */
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       if (!product || !product.inStock) return;
+
       const selectElem = document.getElementById(`variant_${productId}`);
       const selectedIndex = selectElem ? parseInt(selectElem.value) : 0;
-      const variant = product.variants[selectedIndex];
+      const variant = product.variants[selectedIndex] || product.variants[0];
 
       const cartItemId = `${productId}_${variant.unit}`;
       const existing = cart.find(c => c.cartItemId === cartItemId);
-      if (existing) existing.qty++;
-      else cart.push({
-        cartItemId: cartItemId, id: productId, name: product.name,
-        unit: variant.unit, price: variant.price, discountPercent: product.discountPercent || 0, qty: 1
-      });
+      
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({
+          cartItemId: cartItemId, 
+          id: productId, 
+          name: product.name,
+          unit: variant.unit, 
+          price: variant.price, 
+          discountPercent: product.discountPercent || 0, 
+          qty: 1
+        });
+      }
 
       updateCartBadge();
-      renderCart();
       showToast(`${product.name} added to cart!`);
     }
 
@@ -637,7 +645,7 @@
 
         ${isOutOfService ? `<div class="delivery-badge-note" style="background:#ffebee; border-left-color:#e53935; color:#c62828;">❌ Sorry, delivery is only available within 15 km radius.</div>` : ''}
 
-        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryFee}, ${grandTotal}, ${totalDiscount})">
+        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
           
           <div class="form-group">
             <label><i class="fa-solid fa-map-location-dot" style="color:var(--primary);"></i> Select Delivery Location on Map *</label>
@@ -740,7 +748,7 @@
       bill += `*TOTAL BILL AMOUNT:* ₹${grandTotal}\n`;
 
       let targetWhatsapp = appConfig.whatsappNumber;
-      if (targetWhatsapp.length === 10) targetWhatsapp = "91" + targetWhatsapp;
+      if (targetWhatsapp && targetWhatsapp.length === 10) targetWhatsapp = "91" + targetWhatsapp;
 
       if (payMode === "UPI") {
         bill += `*Payment Mode:* UPI\n`;
@@ -793,7 +801,7 @@
 
     function openWhatsAppChat() {
       let phoneNum = appConfig.whatsappNumber;
-      if(phoneNum.length === 10) phoneNum = "91" + phoneNum;
+      if(phoneNum && phoneNum.length === 10) phoneNum = "91" + phoneNum;
       if (phoneNum) {
         window.open(`https://wa.me/${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance.")}`, '_blank');
       }
