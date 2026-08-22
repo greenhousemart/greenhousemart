@@ -74,7 +74,7 @@
     /* Product Grid & Glow Effect */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
     .product-card { background: #fff; border-radius: 14px; overflow: hidden; padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.3s; }
-    .product-card:hover { transform: translateY(-3px); box-shadow: 0 0 18px rgba(46, 125, 50, 0.2); border-color: var(--accent); }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 0 18px rgba(46, 125, 50, 0.2); border-color: var(--primary); }
     
     .product-card img { width: 100%; height: 145px; object-fit: cover; }
     .discount-badge { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 5;}
@@ -90,7 +90,7 @@
     .btn:hover { background: var(--primary-dark); }
     .btn:disabled { background: #aaa; cursor: not-allowed; }
 
-    /* Our Story Glow UI */
+    /* Our Story UI */
     .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
     .story-card { background: #fff; border-radius: 14px; padding: 22px; border-left: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; }
     .story-card:hover { box-shadow: 0 0 20px rgba(46, 125, 50, 0.25); transform: translateY(-3px); }
@@ -114,7 +114,6 @@
     .home-float { background: var(--primary); }
     .whatsapp-float { background: var(--whatsapp); }
 
-    /* Toast */
     #toast { visibility: hidden; min-width: 200px; background-color: #2e7d32; color: #fff; text-align: center; border-radius: 8px; padding: 10px; position: fixed; z-index: 2000; right: 20px; top: 90px; opacity: 0; transition: 0.3s; font-size: 13px; font-weight: bold;}
     #toast.show { visibility: visible; opacity: 1; }
   </style>
@@ -241,7 +240,7 @@
   </div>
 
   <script>
-    // PUT YOUR DEPLOYED GOOGLE APPS SCRIPT URL HERE
+    // Deploy செய்து பெறப்பட்ட புதிய Apps Script URL-ஐ கீழே இடவும்
     const API_URL = "https://script.google.com/macros/s/AKfycbyAGxm_zOiS7bXRXCYTcmQzeFV9CMb7EJ82DEq5f5LaWCnS1FmTwAa7u1HdBDYyL4NJKw/exec";
 
     let appConfig = { whatsappNumber: "987654321" };
@@ -254,8 +253,7 @@
     document.addEventListener("DOMContentLoaded", function() {
       startLiveClock();
       startAutoSlider();
-      loadFastCache();
-      fetchLiveSheetData(); // Guaranteed not to block UI
+      fetchLiveSheetData(); // Direct Live Sync without blocking cache
     });
 
     function startLiveClock() {
@@ -275,35 +273,22 @@
       dots.forEach((dot, idx) => { if (idx === currentSlide) dot.classList.add("active"); else dot.classList.remove("active"); });
     }
 
-    // Load instantly from browser storage
-    function loadFastCache() {
-      const cached = localStorage.getItem("ghfm_fast_cache");
-      if (cached) {
-        try {
-          const data = JSON.parse(cached);
-          if (data.products) { products = data.products; filterProducts(); }
-          if (data.ownerDetails) renderOwners(data.ownerDetails);
-          if (data.contacts) renderContacts(data.contacts);
-          if (data.config && data.config.whatsappNumber) appConfig.whatsappNumber = data.config.whatsappNumber;
-        } catch(e){}
-      }
-    }
-
-    // Async Fetch that will not break/load infinitely
+    // Direct Sync with Cache-Busting Parameter to instantly fetch Excel Updates
     async function fetchLiveSheetData() {
       try {
-        const res = await fetch(API_URL, { method: "GET" });
+        const timestampUrl = API_URL + "?t=" + new Date().getTime();
+        const res = await fetch(timestampUrl);
         const data = await res.json();
+        
         if (data && data.products) {
           products = data.products;
           filterProducts();
           if (data.ownerDetails) renderOwners(data.ownerDetails);
           if (data.contacts) renderContacts(data.contacts);
           if (data.config && data.config.whatsappNumber) appConfig.whatsappNumber = data.config.whatsappNumber;
-          localStorage.setItem("ghfm_fast_cache", JSON.stringify(data));
         }
       } catch (err) {
-        console.warn("Background fetch failed, keeping local cache active.");
+        console.warn("Sheet fetch error:", err);
       }
     }
 
@@ -345,10 +330,9 @@
       renderProducts(filtered);
     }
 
-    // Safe Dynamic Rendering (Fixes Button click & Select issues)
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
-      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1; color:#666;'>No products found in this category.</p>"; return; }
+      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1; color:#666;'>No products found.</p>"; return; }
 
       grid.innerHTML = list.map(p => {
         const firstVariant = p.variants[0] || { unit: "1 Unit", price: 0 };
@@ -387,9 +371,7 @@
       const selectElem = document.getElementById(`variant_${productId}`);
       const variant = product.variants[selectElem.value];
       
-      let priceHtml = `₹${variant.price}`;
-      document.getElementById(`price_${productId}`).innerText = priceHtml;
-      
+      document.getElementById(`price_${productId}`).innerText = `₹${variant.price}`;
       const origElem = document.getElementById(`origPrice_${productId}`);
       if (!origElem) return;
 
@@ -403,7 +385,6 @@
       }
     }
 
-    // Add To Cart Functionality Fix
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       if (!product || !product.inStock) return;
@@ -418,10 +399,7 @@
       if (existing) {
         existing.qty++;
       } else {
-        cart.push({
-          cartItemId: cartItemId, id: productId, name: product.name,
-          unit: variant.unit, price: variant.price, qty: 1
-        });
+        cart.push({ cartItemId: cartItemId, id: productId, name: product.name, unit: variant.unit, price: variant.price, qty: 1 });
       }
 
       updateCartBadge();
@@ -447,10 +425,8 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Exact fix for Indian Whatsapp Links
     function openWhatsAppChat() {
       let phoneNum = appConfig.whatsappNumber || "987654321";
-      // ensure no double 91
       if(phoneNum.length === 10) phoneNum = "91" + phoneNum;
       window.open(`https://wa.me/${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance.")}`, '_blank');
     }
