@@ -10,7 +10,6 @@
       --primary: #2e7d32;
       --primary-dark: #1b5e20;
       --accent-orange: #f57c00;
-      --accent: #81c784;
       --bg: #f4f6f4;
       --text: #1b2e1c;
       --text-muted: #556b56;
@@ -24,120 +23,81 @@
       background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
       z-index: 1000; padding: 10px 15px;
     }
-    .header-container { max-width: 1200px; margin: 0 auto; }
+    .header-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
 
-    .search-container { position: relative; width: 100%; }
+    .search-container { position: relative; flex: 1; max-width: 450px; }
     .search-container input {
       width: 100%; padding: 9px 12px 9px 36px; border-radius: 20px;
-      border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px; transition: border 0.2s;
+      border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px;
     }
-    .search-container input:focus { border-color: var(--primary); background: #fff; }
     .search-container i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
     
     .desktop-nav { display: flex; align-items: center; gap: 18px; }
-    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .desktop-nav a:hover { color: var(--primary); }
     .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 6px; }
-
-    @media (min-width: 769px) {
-      body { padding-top: 75px; padding-bottom: 40px; }
-      .mobile-header-actions, .mobile-bottom-nav { display: none; }
-      .header-container { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; }
-      .brand { grid-column: 1; }
-      .search-container { grid-column: 2; max-width: 450px; margin: 0 auto; }
-      .desktop-nav { grid-column: 3; display: flex; }
-    }
-
-    @media (max-width: 768px) {
-      body { padding-top: 92px; padding-bottom: 75px; }
-      .desktop-nav { display: none; }
-      header { padding: 8px 12px; }
-      .header-container { display: flex; flex-direction: column; gap: 8px; }
-      .header-top { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-      .brand { font-size: 16px; }
-      .mobile-header-actions { display: flex; align-items: center; gap: 14px; }
-      .mobile-header-actions a { color: var(--primary); font-size: 18px; text-decoration: none; position: relative; }
-      .mobile-bottom-nav {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: #ffffff; box-shadow: 0 -2px 12px rgba(0,0,0,0.1);
-        z-index: 1000; padding: 6px 0; justify-content: space-around;
-        align-items: center; border-top: 1px solid #eee;
-      }
-      .mobile-bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #555; font-size: 10px; font-weight: 600; gap: 3px; position: relative; flex: 1; text-align: center; }
-      .mobile-bottom-nav a i { font-size: 18px; }
-      .mobile-bottom-nav a.active-nav { color: var(--primary); }
-      .mobile-cart-badge { position: absolute; top: -2px; right: 22%; background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 1px 5px; }
-      .floating-controls { bottom: 75px; }
-    }
-
-    .live-status-bar { display: flex; align-items: center; justify-content: flex-end; gap: 6px; max-width: 1200px; margin: 0 auto 8px auto; padding: 0 5px; font-size: 11.5px; font-weight: 600; color: #555; }
-    .green-dot { width: 8px; height: 8px; background-color: #2e7d32; border-radius: 50%; display: inline-block; animation: pulse-slow 2s infinite ease-in-out; }
-    @keyframes pulse-slow {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.7); }
-      70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(46, 125, 50, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
-    }
-
-    .hero-banner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: center; background: #f1f8f3; border-radius: 18px; padding: 20px 22px; margin-bottom: 20px; }
-    .hero-content { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-    .badge-pill { background: #e2f0e5; color: var(--primary); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; display: inline-flex; align-items: center; gap: 5px; }
-    .hero-title { font-size: 26px; font-weight: 800; line-height: 1.25; color: var(--text); }
-    .hero-title span.highlight { color: var(--accent-orange); }
-    .hero-subtitle { font-size: 13px; color: var(--text-muted); line-height: 1.45; max-width: 480px; }
-    .hero-actions { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
-    .btn-shop-now { background: var(--primary); color: #fff; padding: 9px 20px; border-radius: 18px; text-decoration: none; font-weight: 700; font-size: 13px; cursor: pointer; border: none; }
-    .btn-our-story { background: #fff; color: var(--text); border: 1px solid #d0dcd2; padding: 9px 20px; border-radius: 18px; text-decoration: none; font-weight: 600; font-size: 13px; cursor: pointer; }
-
-    .hero-slider-container { position: relative; width: 100%; height: 220px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    .hero-slider-track { display: flex; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-    .slide-item { min-width: 100%; height: 100%; position: relative; }
-    .slide-item img { width: 100%; height: 100%; object-fit: cover; }
-    .slide-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.65), transparent); padding: 12px; color: #fff; font-weight: 700; font-size: 13px; }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 12px; }
     .section { display: none; }
     .section.active { display: block; }
 
-    .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    /* Hero Banner */
+    .hero-banner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: center; background: #f1f8f3; border-radius: 18px; padding: 20px 22px; margin-bottom: 20px; }
+    .hero-title { font-size: 26px; font-weight: 800; color: var(--text); }
+    .hero-title span.highlight { color: var(--accent-orange); }
+
+    /* Product Grid */
+    .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
     .filter-tabs { display: flex; gap: 8px; }
-    .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 5px; }
+    .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; }
     .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
     .product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
     .product-card img { width: 100%; height: 135px; object-fit: cover; }
     .discount-badge { position: absolute; top: 8px; left: 8px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 6px; border-radius: 5px; }
-    .product-card h3 { font-size: 13.5px; padding: 0 6px; color: #222; }
+    .product-card h3 { font-size: 13.5px; padding: 0 6px; color: #222; margin: 6px 0; }
     .variant-select { width: calc(100% - 16px); margin: 4px auto 6px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 12px; }
     .price-block { margin-bottom: 6px; }
     .price { font-size: 15.5px; font-weight: bold; color: var(--primary); }
-    .original-price { text-decoration: line-through; color: #888; font-size: 11.5px; margin-left: 4px; }
-    .btn { background: var(--primary); color: #fff; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-weight: 600; width: calc(100% - 16px); margin: 0 auto; display: block; font-size: 13px; }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-weight: 600; width: calc(100% - 16px); margin: 0 auto; font-size: 13px; }
 
-    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-    .owner-card { background: #fff; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .owner-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--primary); }
+    /* Our Story Section */
+    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 16px 0; }
+    .story-card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid var(--primary); }
+    .story-card h3 { font-size: 15px; color: var(--primary); margin-bottom: 6px; }
+    .story-card p { font-size: 13px; color: #555; line-height: 1.5; }
+    
+    .promise-card { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f3 100%); border-radius: 12px; padding: 16px; margin-bottom: 22px; text-align: center; border: 1px solid #c8e6c9; }
+    .promise-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 16px; font-weight: 700; font-size: 13px; color: var(--primary-dark); }
 
-    .contact-card-box { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-top: 15px; }
+    /* Leadership Grid (Sheet 2) */
+    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin: 16px 0 25px; }
+    .owner-card { background: #fff; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .owner-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 3px solid var(--primary); display: block; }
+    .owner-card h3 { font-size: 14px; color: #111; margin-bottom: 2px; }
+    .owner-card .desig { font-size: 12px; font-weight: 700; color: var(--primary); }
+    .owner-card .sub { font-size: 11px; color: #666; margin-top: 4px; }
 
-    footer { background: #1b2e1c; color: #fff; padding: 25px 15px 10px; margin-top: 30px; text-align: center; }
+    /* Contact Us Card (Sheet 3) */
+    .contact-card-box { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin: 25px 0 15px; }
+    .contact-card-box h3 { font-size: 16px; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .contact-card-box p { font-size: 13.5px; color: #444; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+
+    footer { background: #1b2e1c; color: #fff; padding: 20px 15px; margin-top: 30px; text-align: center; font-size: 12px; }
+    
     .floating-controls { position: fixed; right: 15px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-    .float-btn { width: 48px; height: 48px; border-radius: 50%; text-align: center; font-size: 20px; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
+    .float-btn { width: 48px; height: 48px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .home-float { background: var(--primary); }
     .whatsapp-float { background: var(--whatsapp); }
-
-    #toast { visibility: hidden; min-width: 200px; background-color: #2e7d32; color: #fff; text-align: center; border-radius: 8px; padding: 10px; position: fixed; z-index: 2000; right: 15px; top: 80px; opacity: 0; transition: 0.3s; }
-    #toast.show { visibility: visible; opacity: 1; }
   </style>
 </head>
 <body>
 
   <header>
     <div class="header-container">
-      <div class="header-top">
-        <a class="brand" onclick="showSection('home')"><i class="fa-solid fa-leaf"></i> Green House FreshMart</a>
-      </div>
+      <a class="brand" onclick="showSection('home')"><i class="fa-solid fa-leaf"></i> Green House FreshMart</a>
       <div class="search-container">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
@@ -150,21 +110,14 @@
     </div>
   </header>
 
-  <div id="toast">Item added to cart!</div>
-
   <div class="container">
-    <div class="live-status-bar">
-      <span class="green-dot"></span>
-      <span>Live Updates: <span id="liveClock">--:--:--</span></span>
-    </div>
 
-    <!-- Home Page -->
+    <!-- HOME PAGE -->
     <div id="home" class="section active">
       <div class="hero-banner">
-        <div class="hero-content">
-          <div class="badge-pill">🚚 Same-day delivery across Chennai</div>
-          <h1 class="hero-title">Farm fresh <span class="highlight">fruits & veggies</span></h1>
-          <p class="hero-subtitle">Hand-picked daily, hygienically packed, and delivered fresh.</p>
+        <div>
+          <h1 class="hero-title">Farm fresh <span class="highlight">fruits & veggies,</span> straight to your door.</h1>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Hand-picked daily, hygienically packed, and delivered fresh.</p>
         </div>
       </div>
 
@@ -178,27 +131,67 @@
       </div>
 
       <div id="productGrid" class="product-grid"></div>
-    </div>
 
-    <!-- Our Story (Sheet 2: Owner) -->
-    <div id="about" class="section">
-      <h2>Our Story & Leadership</h2>
-      <div id="ownerContainer" class="owner-grid"></div>
-
+      <!-- Contact Us at Home Bottom (Synced from Sheet 3) -->
       <div class="contact-card-box">
         <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
-        <p><b>Address:</b> <span id="contactAddress">Chennai</span></p>
-        <p><b>Phone:</b> <span id="contactPhone">987654321</span></p>
-        <p><b>Email:</b> <span id="contactEmail">abc@gmail.com</span></p>
+        <p><b>Address:</b> <span class="contactAddressVal">Chennai</span></p>
+        <p><b>Phone:</b> <span class="contactPhoneVal">987654321</span></p>
+        <p><b>Email:</b> <span class="contactEmailVal">abc@gmail.com</span></p>
       </div>
     </div>
 
-    <!-- Cart -->
-    <div id="cart" class="section">
-      <h2>Your Cart</h2>
-      <div id="cartItems">Cart is empty.</div>
+    <!-- OUR STORY PAGE -->
+    <div id="about" class="section">
+      <h2 style="color: var(--primary-dark);">Our Story</h2>
+
+      <div class="about-stories-grid">
+        <div class="story-card">
+          <h3>🌱 How We Started</h3>
+          <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep. We started locally with direct customer orders through WhatsApp, focusing on freshness, quality and reliable service.</p>
+        </div>
+        <div class="story-card">
+          <h3>🛒 How We Purchase</h3>
+          <p>We carefully select vegetables and fruits based on freshness and quality. We purchase products from trusted local farmers, growers and wholesale markets, choosing fresh produce according to customer demand. This helps us reduce unnecessary storage and provide fresher products.</p>
+        </div>
+        <div class="story-card">
+          <h3>🚚 How We Deliver</h3>
+          <p>Once you place your order through our website or WhatsApp, we confirm the order, carefully pack the products and arrange doorstep delivery within our service area. Our goal is to deliver your order fresh, safely and on time.</p>
+        </div>
+      </div>
+
+      <div class="promise-card">
+        <h3>💚 Our Promise</h3>
+        <div class="promise-list">
+          <span>Fresh Products</span> •
+          <span>Fair Pricing</span> •
+          <span>Easy Ordering</span> •
+          <span>Doorstep Delivery</span>
+        </div>
+      </div>
+
+      <!-- Leadership Team (Synced from Sheet 2 Owner) -->
+      <h3 style="font-size: 18px; margin-top: 25px;">Leadership Team</h3>
+      <div id="ownerContainer" class="owner-grid"></div>
+
+      <!-- Contact Us at Story Bottom (Synced from Sheet 3) -->
+      <div class="contact-card-box">
+        <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
+        <p><b>Address:</b> <span class="contactAddressVal">Chennai</span></p>
+        <p><b>Phone:</b> <span class="contactPhoneVal">987654321</span></p>
+        <p><b>Email:</b> <span class="contactEmailVal">abc@gmail.com</span></p>
+      </div>
     </div>
+
+    <!-- CART PAGE -->
+    <div id="cart" class="section">
+      <h2>Your Shopping Cart</h2>
+      <div id="cartItems" style="margin-top: 15px;">Your cart is empty.</div>
+    </div>
+
   </div>
+
+  <footer>&copy; 2026 Green House FreshMart</footer>
 
   <div class="floating-controls">
     <button class="float-btn home-float" onclick="showSection('home')"><i class="fa-solid fa-arrow-up"></i></button>
@@ -210,15 +203,13 @@
 
     let appConfig = { whatsappNumber: "987654321" };
     let products = [];
-    let cart = [];
     let currentCategory = "all";
 
     function init() {
-      loadFastCache(); // Local Cache-ல் இருந்து 0.01 வினாடியில் உடனே லோட் ஆகும்
-      fetchLiveSheetData(); // பின்புலத்தில் Google Sheet-ல் புது டேட்டாவை Sync செய்யும்
+      loadFastCache();
+      fetchLiveSheetData();
     }
 
-    // --- INSTANT CACHE ENGINE ---
     function loadFastCache() {
       const cached = localStorage.getItem("ghfm_fast_cache");
       if (cached) {
@@ -242,30 +233,43 @@
           if (data.ownerDetails) renderOwners(data.ownerDetails);
           if (data.contacts) renderContacts(data.contacts);
           
-          localStorage.setItem("ghfm_fast_cache", JSON.stringify(data)); // Cache Update
+          localStorage.setItem("ghfm_fast_cache", JSON.stringify(data));
         }
       } catch (err) {
-        console.warn("Using offline cached data.");
+        console.warn("Using active cached data.");
       }
     }
 
+    // Render Leadership Team (Sheet 2: Owner)
     function renderOwners(owners) {
       const container = document.getElementById("ownerContainer");
       if (!owners || !owners.length) return;
-      container.innerHTML = owners.map(o => `
-        <div class="owner-card">
-          <img src="${o.photo}" alt="${o.name}">
-          <h3>${o.name}</h3>
-          <p><b>${o.designation}</b></p>
-          <p style="font-size:12px; color:#666; margin-top:5px;">${o.bio}</p>
-        </div>
-      `).join('');
+      
+      container.innerHTML = owners.map(o => {
+        const validPhoto = (o.photo && o.photo.startsWith("http")) ? o.photo : "https://via.placeholder.com/100?text=" + encodeURIComponent(o.name);
+        return `
+          <div class="owner-card">
+            <img src="${validPhoto}" alt="${o.name}" onerror="this.src='https://via.placeholder.com/100?text=Member'">
+            <h3>${o.name}</h3>
+            <div class="desig">${o.designation}</div>
+            ${o.subText ? `<div class="sub">${o.subText}</div>` : ''}
+          </div>
+        `;
+      }).join('');
     }
 
+    // Render Contact Us (Sheet 3: Contacts)
     function renderContacts(contacts) {
-      if (contacts["Address"]) document.getElementById("contactAddress").innerText = contacts["Address"];
-      if (contacts["PhoneNumber"]) document.getElementById("contactPhone").innerText = contacts["PhoneNumber"];
-      if (contacts["Email"]) document.getElementById("contactEmail").innerText = contacts["Email"];
+      if (contacts["Address"]) {
+        document.querySelectorAll(".contactAddressVal").forEach(el => el.innerText = contacts["Address"]);
+      }
+      if (contacts["PhoneNumber"]) {
+        document.querySelectorAll(".contactPhoneVal").forEach(el => el.innerText = contacts["PhoneNumber"]);
+        appConfig.whatsappNumber = String(contacts["PhoneNumber"]).replace(/[^0-9]/g, "");
+      }
+      if (contacts["Email"]) {
+        document.querySelectorAll(".contactEmailVal").forEach(el => el.innerText = contacts["Email"]);
+      }
     }
 
     function setCategoryFilter(cat, btn) {
@@ -287,7 +291,7 @@
 
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
-      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
+      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products available.</p>"; return; }
 
       grid.innerHTML = list.map(p => `
         <div class="product-card">
@@ -305,6 +309,7 @@
     function showSection(id) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function openWhatsAppChat() {
