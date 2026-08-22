@@ -87,17 +87,25 @@
     .btn:hover { background: var(--primary-dark); }
     .btn:disabled { background: #aaa; cursor: not-allowed; }
 
-    /* CART & FORM STYLES */
+    /* REAL BILL & CHECKOUT UI STYLES */
     .cart-container-box { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0ebe1; margin-top: 15px; }
-    .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; gap: 10px; }
+    .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #e0e0e0; gap: 10px; }
     .cart-item-info h4 { font-size: 15px; color: var(--text); }
-    .cart-item-info span { font-size: 13px; color: #666; }
+    .cart-item-info span { font-size: 12.5px; color: #666; }
     .qty-controls { display: flex; align-items: center; gap: 10px; }
-    .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ccc; background: #f9f9f9; cursor: pointer; font-weight: bold; }
-    .cart-summary { margin-top: 20px; padding-top: 15px; border-top: 2px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; }
-    .cart-total-price { font-size: 20px; font-weight: 800; color: var(--primary); }
-    
-    .checkout-form { margin-top: 25px; display: grid; gap: 14px; max-width: 600px; }
+    .qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid #ccc; background: #f9f9f9; cursor: pointer; font-weight: bold; }
+
+    /* Supermarket Bill Format */
+    .bill-receipt-box { background: #fbfdfb; border: 1px dashed var(--primary); border-radius: 12px; padding: 18px; margin-top: 20px; }
+    .bill-title { text-align: center; font-size: 14px; font-weight: 800; color: var(--primary-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; }
+    .bill-row { display: flex; justify-content: space-between; font-size: 13.5px; color: #444; margin-bottom: 6px; }
+    .bill-row.savings { color: #d32f2f; font-weight: 600; }
+    .bill-row.grand-total { border-top: 2px solid var(--primary); padding-top: 10px; font-size: 18px; font-weight: 800; color: var(--primary); margin-top: 10px; }
+
+    .map-preview-container { margin-top: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #ccc; height: 160px; width: 100%; display: none; }
+    .map-preview-container iframe { width: 100%; height: 100%; border: none; }
+
+    .checkout-form { margin-top: 20px; display: grid; gap: 14px; max-width: 600px; }
     .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group label { font-size: 13px; font-weight: 700; color: var(--text); }
     .checkout-form input, .checkout-form textarea { width: 100%; padding: 11px 14px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; outline: none; }
@@ -107,10 +115,11 @@
     .payment-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
     .payment-label input { width: auto; cursor: pointer; }
 
-    /* OUR STORY UI ENHANCEMENTS */
+    .delivery-badge-note { font-size: 12px; font-weight: 600; color: #555; background: #f0f7f1; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); margin-top: 10px; }
+
+    /* OUR STORY & LEGAL PAGES */
     .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
-    .story-card { background: #fff; border-radius: 12px; padding: 18px; border-left: 4px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.04); transition: all 0.3s ease; }
-    .story-card:hover { box-shadow: 0 0 15px rgba(46, 125, 50, 0.2); transform: translateY(-2px); }
+    .story-card { background: #fff; border-radius: 12px; padding: 18px; border-left: 4px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
     .story-card h3 { font-size: 15px; color: var(--primary); margin-bottom: 6px; }
     .story-card p { font-size: 13px; color: #555; line-height: 1.5; }
 
@@ -118,17 +127,11 @@
     .owner-card { background: #fff; border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #f0f0f0; }
     .owner-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 2px solid var(--primary); display: block; }
     .owner-card h3 { font-size: 14px; color: #111; }
-    
-    .promise-card { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f3 100%); border-radius: 12px; padding: 14px; margin-bottom: 25px; text-align: center; border: 1px solid #c8e6c9; }
-    .promise-list { font-size: 13px; font-weight: 700; color: var(--primary-dark); }
 
-    /* LEGAL PAGES UI */
     .policy-box { background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0ebe1; }
     .policy-box h2 { color: var(--primary); font-size: 22px; margin-bottom: 15px; }
     .policy-box ul { margin-left: 20px; margin-bottom: 20px; }
     .policy-box li { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 8px; }
-    .policy-box p { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 12px; }
-    .policy-footer { margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; color: var(--primary-dark); font-weight: bold; }
 
     /* FOOTER */
     footer.main-footer { background: var(--primary-dark); color: #e8f5e9; padding: 40px 20px 20px; margin-top: 40px; }
@@ -218,7 +221,7 @@
       <div id="productGrid" class="product-grid"></div>
     </div>
 
-    <!-- OUR STORY PAGE (COMPACT & NEAT) -->
+    <!-- OUR STORY PAGE -->
     <div id="about" class="section">
       <h2 style="color: var(--primary-dark); font-size: 22px; margin-bottom: 8px;">Our Story</h2>
       <div class="about-stories-grid">
@@ -235,13 +238,6 @@
           <p>Once you place your order, we confirm it, carefully pack the products, and arrange doorstep delivery within our service area fresh, safely and on time.</p>
         </div>
       </div>
-
-      <div class="promise-card">
-        <div class="promise-list">
-          💚 Fresh Products • Fair Pricing • Easy Ordering • Doorstep Delivery
-        </div>
-      </div>
-
       <h3 style="font-size: 18px; margin-top: 20px;">Leadership Team</h3>
       <div id="ownerContainer" class="owner-grid"></div>
     </div>
@@ -252,7 +248,7 @@
       <div id="cartItems" class="cart-container-box">Your cart is empty.</div>
     </div>
 
-    <!-- TERMS & CONDITIONS PAGE -->
+    <!-- TERMS & CONDITIONS -->
     <div id="terms" class="section">
       <div class="policy-box">
         <h2>Terms & Conditions</h2>
@@ -262,37 +258,19 @@
           <li>Prices may change based on market and seasonal availability.</li>
           <li>Please provide the correct delivery address and contact number.</li>
           <li>Delivery time may vary due to traffic, weather and other unexpected situations.</li>
-          <li>Fresh fruits and vegetables may naturally vary in size, colour and appearance.</li>
-          <li>If you receive a damaged or wrong product, please contact us immediately after delivery.</li>
-          <li>Cancellation or replacement is subject to our policy.</li>
-          <li>By placing an order, you agree to our Terms & Conditions.</li>
         </ul>
-        <div class="policy-footer">
-          Green House Fresh Farm<br>
-          <small style="font-weight: normal;">Fresh • Healthy • Delivered to Your Door</small>
-        </div>
       </div>
     </div>
 
-    <!-- PRIVACY POLICY PAGE -->
+    <!-- PRIVACY POLICY -->
     <div id="privacy" class="section">
       <div class="policy-box">
         <h2>Privacy Policy</h2>
         <p>At Green House Fresh Farm, we respect your privacy and keep your information safe.</p>
         <ul>
           <li>We collect only the details needed to process your order and delivery.</li>
-          <li>This may include your name, phone number, delivery address and payment details.</li>
-          <li>Your information is used only for orders, delivery, customer support and service updates.</li>
-          <li>We do not sell or share your personal information with third parties for marketing purposes.</li>
-          <li>Payment details are processed securely through our payment service providers.</li>
-          <li>We take reasonable steps to protect your personal information.</li>
-          <li>By using our website or placing an order, you agree to this Privacy Policy.</li>
+          <li>Your information is used only for orders, delivery, and support.</li>
         </ul>
-        <p>For any questions about your personal information, please contact Green House Fresh Farm.</p>
-        <div class="policy-footer">
-          Green House Fresh Farm<br>
-          <small style="font-weight: normal;">Fresh • Healthy • Delivered to Your Door</small>
-        </div>
       </div>
     </div>
 
@@ -335,13 +313,17 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbyAGxm_zOiS7bXRXCYTcmQzeFV9CMb7EJ82DEq5f5LaWCnS1FmTwAa7u1HdBDYyL4NJKw/exec";
 
+    // Center Hub Coordinates for Distance Calculation
+    const HUB_LAT = 12.9961;
+    const HUB_LNG = 80.1983;
+
     let appConfig = { whatsappNumber: "9876543210", merchantUpiId: "greenhouse@upi" };
     let products = [];
     let cart = [];
     let currentCategory = "all";
     let currentSlide = 0;
     let toastTimeout;
-    let userCoords = { lat: "", lng: "", mapUrl: "" };
+    let userCoords = { lat: "", lng: "", mapUrl: "", distanceKm: 0 };
 
     document.addEventListener("DOMContentLoaded", function() {
       startLiveClock();
@@ -444,7 +426,10 @@
       const cartItemId = `${productId}_${variant.unit}`;
       const existing = cart.find(c => c.cartItemId === cartItemId);
       if (existing) existing.qty++;
-      else cart.push({ cartItemId: cartItemId, id: productId, name: product.name, unit: variant.unit, price: variant.price, qty: 1 });
+      else cart.push({
+        cartItemId: cartItemId, id: productId, name: product.name,
+        unit: variant.unit, price: variant.price, discountPercent: product.discountPercent || 0, qty: 1
+      });
 
       updateCartBadge();
       renderCart();
@@ -460,6 +445,18 @@
       renderCart();
     }
 
+    // Distance Haversine Formula
+    function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius of the earth in km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
     function getLocation() {
       const btn = document.getElementById("locBtn");
       if (navigator.geolocation) {
@@ -469,11 +466,22 @@
             userCoords.lat = pos.coords.latitude;
             userCoords.lng = pos.coords.longitude;
             userCoords.mapUrl = `https://www.google.com/maps?q=${userCoords.lat},${userCoords.lng}`;
-            btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:green;"></i> Location Fetched (${userCoords.lat.toFixed(4)}, ${userCoords.lng.toFixed(4)})`;
-            document.getElementById("coordsDisplay").value = `${userCoords.lat}, ${userCoords.lng}`;
+            userCoords.distanceKm = calculateDistanceKm(HUB_LAT, HUB_LNG, userCoords.lat, userCoords.lng);
+
+            btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:green;"></i> GPS Located (~${userCoords.distanceKm.toFixed(1)} km away)`;
+            
+            // Render Map Iframe inside cart
+            const mapFrame = document.getElementById("mapIframe");
+            const mapBox = document.getElementById("mapBox");
+            if(mapFrame && mapBox) {
+              mapFrame.src = `https://maps.google.com/maps?q=${userCoords.lat},${userCoords.lng}&z=15&output=embed`;
+              mapBox.style.display = "block";
+            }
+
+            renderCart(); // Recalculate bill with distance fee
           },
           (err) => {
-            alert("Could not fetch location automatically. Please allow GPS access.");
+            alert("Could not fetch location automatically. Please enable GPS permissions.");
             btn.innerText = "📍 Retry Live Location";
           }
         );
@@ -487,10 +495,16 @@
         return;
       }
 
-      let totalSum = 0;
+      let subtotal = 0;
+      let totalDiscount = 0;
+
       let html = cart.map(item => {
         const itemTotal = item.price * item.qty;
-        totalSum += itemTotal;
+        subtotal += itemTotal;
+        if (item.discountPercent > 0) {
+          const origPrice = Math.round(item.price / (1 - (item.discountPercent/100)));
+          totalDiscount += (origPrice - item.price) * item.qty;
+        }
         return `
           <div class="cart-item-row">
             <div class="cart-item-info">
@@ -507,13 +521,49 @@
         `;
       }).join('');
 
+      // Delivery Charge Calculation Based on Distance
+      let deliveryCharge = 0;
+      let isOutOfService = false;
+      const dist = userCoords.distanceKm;
+
+      if (dist > 15) {
+        isOutOfService = true;
+      } else if (dist > 10) {
+        deliveryCharge = 30;
+      } else if (dist > 5) {
+        deliveryCharge = 20;
+      } else { // 0 to 5 km
+        deliveryCharge = subtotal >= 120 ? 0 : 20;
+      }
+
+      const grandTotal = subtotal + deliveryCharge;
+
+      // Supermarket Receipt Format
       html += `
-        <div class="cart-summary">
-          <span>Grand Total</span>
-          <span class="cart-total-price">₹${totalSum}</span>
+        <div class="bill-receipt-box">
+          <div class="bill-title">Order Summary & Bill</div>
+          <div class="bill-row">
+            <span>Subtotal</span>
+            <span>₹${subtotal}</span>
+          </div>
+          ${totalDiscount > 0 ? `
+          <div class="bill-row savings">
+            <span>You Saved (Discount)</span>
+            <span>- ₹${totalDiscount}</span>
+          </div>` : ''}
+          <div class="bill-row">
+            <span>Delivery Charge ${dist > 0 ? `(~${dist.toFixed(1)} km)` : ''}</span>
+            <span>${deliveryCharge === 0 ? '<strong style="color:green;">FREE</strong>' : '₹' + deliveryCharge}</span>
+          </div>
+          <div class="bill-row grand-total">
+            <span>Grand Total</span>
+            <span>₹${grandTotal}</span>
+          </div>
         </div>
 
-        <form class="checkout-form" onsubmit="handleCheckout(event, ${totalSum})">
+        ${isOutOfService ? `<div class="delivery-badge-note" style="background:#ffebee; border-left-color:#e53935; color:#c62828;">❌ Sorry, delivery is only available within 15 km radius.</div>` : ''}
+
+        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
           <div class="form-group">
             <label>Full Name *</label>
             <input type="text" id="custName" placeholder="Enter your name" required>
@@ -525,14 +575,21 @@
           </div>
 
           <div class="form-group">
-            <label>Manual Delivery Address *</label>
-            <textarea id="custAddress" rows="2" placeholder="House No, Street Name, Area, Pincode" required></textarea>
+            <label>Address *</label>
+            <textarea id="custAddress" rows="2" placeholder="House No, Street Name, Area" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Pincode *</label>
+            <input type="text" id="custPincode" placeholder="6-digit Pincode" pattern="[0-9]{6}" required>
           </div>
 
           <div class="form-group">
             <label>Live GPS Location *</label>
             <button type="button" class="location-btn" id="locBtn" onclick="getLocation()"><i class="fa-solid fa-location-crosshairs"></i> Get Current Live Location</button>
-            <input type="hidden" id="coordsDisplay" required>
+            <div id="mapBox" class="map-preview-container">
+              <iframe id="mapIframe" src=""></iframe>
+            </div>
           </div>
 
           <div class="form-group">
@@ -540,7 +597,7 @@
             <div class="payment-options">
               <label class="payment-label">
                 <input type="radio" name="payMode" value="UPI" checked>
-                <i class="fa-solid fa-qrcode"></i> UPI (GPay / PhonePe / Paytm)
+                <i class="fa-solid fa-qrcode"></i> UPI
               </label>
               <label class="payment-label">
                 <input type="radio" name="payMode" value="COD">
@@ -549,14 +606,14 @@
             </div>
           </div>
 
-          <button type="submit" class="btn" style="width: 100%; padding: 12px; margin-top: 10px; font-size: 15px;">Confirm Order</button>
+          <button type="submit" class="btn" id="submitOrderBtn" ${isOutOfService ? 'disabled' : ''} style="width: 100%; padding: 12px; margin-top: 10px; font-size: 15px;">Confirm Order (₹${grandTotal})</button>
         </form>
       `;
 
       container.innerHTML = html;
     }
 
-    function handleCheckout(e, totalAmount) {
+    function handleCheckout(e, subtotal, deliveryFee, grandTotal, totalDiscount) {
       e.preventDefault();
 
       if (!userCoords.mapUrl) {
@@ -564,37 +621,48 @@
         return;
       }
 
+      if (userCoords.distanceKm > 15) {
+        alert("Sorry, your location is beyond our 15 km delivery radius.");
+        return;
+      }
+
       const name = document.getElementById("custName").value;
       const phone = document.getElementById("custPhone").value;
       const address = document.getElementById("custAddress").value;
+      const pincode = document.getElementById("custPincode").value;
       const payMode = document.querySelector('input[name="payMode"]:checked').value;
 
-      let bill = `*GREEN HOUSE FRESHMART - INVOICE*\n`;
+      // Realistic Bill Message
+      let bill = `*GREEN HOUSE FRESHMART - TAX INVOICE*\n`;
       bill += `----------------------------------------\n`;
-      bill += `*Customer:* ${name}\n`;
+      bill += `*Customer Name:* ${name}\n`;
       bill += `*Phone:* ${phone}\n`;
-      bill += `*Address:* ${address}\n`;
-      bill += `*Location:* ${userCoords.mapUrl}\n`;
+      bill += `*Address:* ${address}, Pincode: ${pincode}\n`;
+      bill += `*Map Location:* ${userCoords.mapUrl}\n`;
       bill += `----------------------------------------\n`;
-      bill += `*Ordered Items:*\n`;
+      bill += `*ITEMS PURCHASED:*\n`;
 
       cart.forEach((c, idx) => {
         bill += `${idx + 1}. ${c.name} (${c.unit}) x ${c.qty} = ₹${c.price * c.qty}\n`;
       });
 
       bill += `----------------------------------------\n`;
-      bill += `*Total Amount:* ₹${totalAmount}\n`;
+      bill += `*Subtotal:* ₹${subtotal}\n`;
+      if (totalDiscount > 0) bill += `*Total Discount:* -₹${totalDiscount}\n`;
+      bill += `*Delivery Fee:* ₹${deliveryFee}\n`;
+      bill += `*TOTAL BILL AMOUNT:* ₹${grandTotal}\n`;
 
       let targetWhatsapp = appConfig.whatsappNumber || "9876543210";
       if (targetWhatsapp.length === 10) targetWhatsapp = "91" + targetWhatsapp;
 
       if (payMode === "UPI") {
+        bill += `*Payment Mode:* UPI\n`;
         bill += `*Payment Status:* PAID VIA UPI\n`;
         bill += `----------------------------------------\n`;
-        bill += `💚 Thank you for shopping with Green House FreshMart! Your order will be delivered shortly.`;
+        bill += `💚 Thank you for shopping with Green House FreshMart! Your fresh order will be delivered shortly.`;
 
         const merchantUpi = appConfig.merchantUpiId;
-        const upiUrl = `upi://pay?pa=${merchantUpi}&pn=GreenHouseFreshMart&am=${totalAmount}&cu=INR&tn=Order_Payment`;
+        const upiUrl = `upi://pay?pa=${merchantUpi}&pn=GreenHouseFreshMart&am=${grandTotal}&cu=INR&tn=Order_Payment`;
         
         window.location.href = upiUrl;
 
@@ -603,9 +671,10 @@
         }, 2000);
 
       } else {
-        bill += `*Payment Status:* PENDING (Cash on Delivery)\n`;
+        bill += `*Payment Mode:* CASH ON DELIVERY\n`;
+        bill += `*Payment Status:* PENDING\n`;
         bill += `----------------------------------------\n`;
-        bill += `💚 Thank you for your order! Please keep ₹${totalAmount} ready in cash.`;
+        bill += `💚 Thank you for your order! Please keep ₹${grandTotal} ready in cash for delivery.`;
 
         window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
       }
