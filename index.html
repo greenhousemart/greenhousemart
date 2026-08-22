@@ -20,31 +20,25 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-top: 75px; }
 
-    /* PERFECT HEADER ALIGNMENT (Left Logo, Center Search, Right Nav) */
+    /* HEADER */
     header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; padding: 10px 20px; }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     
-    /* LEFT: BRAND & LOGO */
     .brand { font-size: 19px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; cursor: pointer; white-space: nowrap; }
-    .brand-logo-img { height: 38px; width: auto; object-fit: contain; }
 
-    /* CENTER: SEARCH BAR */
     .search-container { position: relative; flex: 1; max-width: 480px; margin: 0 auto; }
     .search-container input { width: 100%; padding: 8px 14px 8px 38px; border-radius: 20px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px; }
     .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
     
-    /* RIGHT: NAVIGATION */
     .desktop-nav { display: flex; align-items: center; gap: 20px; }
     .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; }
     .desktop-nav a i { font-size: 15px; color: #333; }
     .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
 
-    /* MOBILE RESPONSIVE LAYOUT */
     @media (max-width: 850px) {
       body { padding-top: 115px; }
       .header-container { flex-wrap: wrap; justify-content: space-between; gap: 8px; }
       .brand { font-size: 16px; }
-      .brand-logo-img { height: 32px; }
       .desktop-nav { gap: 12px; }
       .desktop-nav a { font-size: 13px; }
       .search-container { order: 3; flex: 100%; width: 100%; max-width: 100%; margin-top: 2px; }
@@ -137,15 +131,24 @@
 
     .delivery-badge-note { font-size: 11.5px; font-weight: 600; color: #555; background: #f0f7f1; padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--primary); margin-top: 10px; }
 
-    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 16px 0; }
-    .story-card { background: #fff; border-radius: 10px; padding: 14px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-    .story-card h3 { font-size: 14px; color: var(--primary); margin-bottom: 4px; }
-    .story-card p { font-size: 12px; color: #555; line-height: 1.4; }
+    /* EXPANDED & BEAUTIFUL OUR STORY PAGE */
+    .about-page-wrapper { max-width: 1100px; margin: 0 auto; padding: 10px 0 30px; }
+    .about-main-title { font-size: 26px; font-weight: 800; color: var(--primary-dark); margin-bottom: 20px; border-bottom: 3px solid var(--primary); display: inline-block; padding-bottom: 6px; }
+    
+    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 35px; }
+    .story-card { background: #fff; border-radius: 16px; padding: 22px; border-left: 6px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; }
+    .story-card:hover { transform: translateY(-4px); }
+    .story-card h3 { font-size: 17px; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .story-card p { font-size: 13.5px; color: #444; line-height: 1.6; }
 
-    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 12px 0 20px; }
-    .owner-card { background: #fff; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #f0f0f0; }
-    .owner-card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin: 0 auto 8px; border: 2px solid var(--primary); display: block; }
-    .owner-card h3 { font-size: 13px; color: #111; }
+    .team-section-title { font-size: 20px; font-weight: 700; color: #222; margin: 30px 0 15px; border-left: 4px solid var(--accent-orange); padding-left: 10px; }
+    
+    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+    .owner-card { background: #fff; border-radius: 16px; padding: 20px 15px; text-align: center; border: 1px solid #e0ebe1; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: 0.3s; }
+    .owner-card:hover { box-shadow: 0 6px 20px rgba(46,125,50,0.15); border-color: var(--primary); }
+    .owner-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; border: 3px solid var(--primary); display: block; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+    .owner-card h3 { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .owner-card .designation-text { font-size: 12.5px; font-weight: 700; color: var(--primary); }
 
     .policy-box { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e0ebe1; }
     .policy-box h2 { color: var(--primary); font-size: 18px; margin-bottom: 12px; }
@@ -170,23 +173,18 @@
 </head>
 <body>
 
-  <!-- HEADER WITH LEFT LOGO, CENTER SEARCH, RIGHT NAV -->
   <header>
     <div class="header-container">
-      
-      <!-- LEFT: LOGO & NAME -->
       <a class="brand" onclick="showSection('home')">
         <i class="fa-solid fa-leaf"></i>
         <span>Green House FreshMart</span>
       </a>
 
-      <!-- CENTER: SEARCH BAR -->
       <div class="search-container">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
       </div>
 
-      <!-- RIGHT: MENU -->
       <nav class="desktop-nav">
         <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span>Home</span></a>
         <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span>Our Story</span></a>
@@ -195,7 +193,6 @@
           <span class="cart-badge" id="cartCount">0</span>
         </a>
       </nav>
-
     </div>
   </header>
 
@@ -252,25 +249,34 @@
       <div id="productGrid" class="product-grid"></div>
     </div>
 
-    <!-- OUR STORY PAGE -->
+    <!-- EXPANDED OUR STORY PAGE -->
     <div id="about" class="section">
-      <h2 style="color: var(--primary-dark); font-size: 20px; margin-bottom: 8px;">Our Story</h2>
-      <div class="about-stories-grid">
-        <div class="story-card">
-          <h3>🌱 How We Started</h3>
-          <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep. We started locally with direct customer orders through WhatsApp, focusing on freshness, quality and reliable service.</p>
+      <div class="about-page-wrapper">
+        <h2 class="about-main-title">Our Story</h2>
+        
+        <div class="about-stories-grid">
+          <div class="story-card">
+            <h3>🌱 How We Started</h3>
+            <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep. We started locally with direct customer orders through WhatsApp, focusing on freshness, quality and reliable service.</p>
+          </div>
+          <div class="story-card">
+            <h3>🛒 How We Purchase</h3>
+            <p>We carefully select vegetables and fruits based on freshness and quality. We purchase products from trusted local farmers, growers and wholesale markets, choosing fresh produce according to customer demand.</p>
+          </div>
+          <div class="story-card">
+            <h3>🚚 How We Deliver</h3>
+            <p>Once you place your order, we confirm it, carefully pack the products, and arrange doorstep delivery within our service area fresh, safely and on time.</p>
+          </div>
         </div>
-        <div class="story-card">
-          <h3>🛒 How We Purchase</h3>
-          <p>We carefully select vegetables and fruits based on freshness and quality. We purchase products from trusted local farmers, growers and wholesale markets, choosing fresh produce according to customer demand.</p>
-        </div>
-        <div class="story-card">
-          <h3>🚚 How We Deliver</h3>
-          <p>Once you place your order, we confirm it, carefully pack the products, and arrange doorstep delivery within our service area fresh, safely and on time.</p>
-        </div>
+
+        <!-- LEADERSHIP TEAM SECTION -->
+        <h3 class="team-section-title">Leadership Team</h3>
+        <div id="leadershipContainer" class="owner-grid"></div>
+
+        <!-- TECHNOLOGY TEAM SECTION -->
+        <h3 class="team-section-title">Technology Team</h3>
+        <div id="techContainer" class="owner-grid"></div>
       </div>
-      <h3 style="font-size: 16px; margin-top: 16px;">Leadership Team</h3>
-      <div id="ownerContainer" class="owner-grid"></div>
     </div>
 
     <!-- CART PAGE -->
@@ -297,7 +303,7 @@
     <div id="privacy" class="section">
       <div class="policy-box">
         <h2>Privacy Policy</h2>
-        <p>At Green House Fresh Farm, we respect your privacy and keep your information safe.</p>
+        <p>At Green House FreshMart, we respect your privacy and keep your information safe.</p>
         <ul>
           <li>We collect only the details needed to process your order and delivery.</li>
           <li>Your information is used only for orders, delivery, and support.</li>
@@ -398,16 +404,34 @@
       } catch (err) { console.warn("Sheet fetch error:", err); }
     }
 
+    // RENDER OWNERS SEPARATED BY LEADERSHIP & TECHNOLOGY
     function renderOwners(owners) {
-      const container = document.getElementById("ownerContainer");
+      const leadershipContainer = document.getElementById("leadershipContainer");
+      const techContainer = document.getElementById("techContainer");
       if (!owners || !owners.length) return;
-      container.innerHTML = owners.map(o => `
-        <div class="owner-card">
-          <img src="${o.photo || 'https://via.placeholder.com/80'}" alt="${o.name}">
-          <h3>${o.name}</h3>
-          <div style="font-size:10.5px; font-weight:700; color:var(--primary);">${o.designation}</div>
-        </div>
-      `).join('');
+
+      let leadershipHtml = "";
+      let techHtml = "";
+
+      owners.forEach(o => {
+        const des = (o.designation || "").toLowerCase();
+        const cardHtml = `
+          <div class="owner-card">
+            <img src="${o.photo || 'https://via.placeholder.com/100'}" alt="${o.name}" onerror="this.src='https://via.placeholder.com/100'">
+            <h3>${o.name}</h3>
+            <div class="designation-text">${o.designation}</div>
+          </div>
+        `;
+
+        if (des.includes("developer") || des.includes("tech") || des.includes("software")) {
+          techHtml += cardHtml;
+        } else {
+          leadershipHtml += cardHtml;
+        }
+      });
+
+      if(leadershipContainer) leadershipContainer.innerHTML = leadershipHtml || "<p style='color:#666;'>No leadership details found.</p>";
+      if(techContainer) techContainer.innerHTML = techHtml || "<p style='color:#666;'>No technology team details found.</p>";
     }
 
     function renderContacts(contacts) {
