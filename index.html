@@ -78,18 +78,16 @@
     .product-card img { width: 100%; height: 145px; object-fit: cover; }
     .discount-badge { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 5;}
     .product-card h3 { font-size: 14px; padding: 0 8px; color: #222; margin: 8px 0 2px; }
-    .combo-desc { font-size: 11px; color: #666; padding: 0 8px; margin-bottom: 6px; line-height: 1.3; }
     .variant-select { width: calc(100% - 20px); margin: 4px auto 8px; padding: 6px; border-radius: 6px; border: 1px solid #ccc; font-size: 12px; outline: none; }
     
     .price-block { margin-bottom: 8px; }
     .price { font-size: 16px; font-weight: bold; color: var(--primary); }
-    .original-price { text-decoration: line-through; color: #888; font-size: 12px; margin-left: 6px; }
     
     .btn { background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 20px); margin: 0 auto; font-size: 13px; transition: 0.2s; }
     .btn:hover { background: var(--primary-dark); }
     .btn:disabled { background: #aaa; cursor: not-allowed; }
 
-    /* CART CHECKOUT FORM ENHANCEMENTS */
+    /* CART & FORM STYLES */
     .cart-container-box { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0ebe1; margin-top: 15px; }
     .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; gap: 10px; }
     .cart-item-info h4 { font-size: 15px; color: var(--text); }
@@ -109,7 +107,30 @@
     .payment-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
     .payment-label input { width: auto; cursor: pointer; }
 
-    /* Footer */
+    /* OUR STORY UI ENHANCEMENTS */
+    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+    .story-card { background: #fff; border-radius: 12px; padding: 18px; border-left: 4px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.04); transition: all 0.3s ease; }
+    .story-card:hover { box-shadow: 0 0 15px rgba(46, 125, 50, 0.2); transform: translateY(-2px); }
+    .story-card h3 { font-size: 15px; color: var(--primary); margin-bottom: 6px; }
+    .story-card p { font-size: 13px; color: #555; line-height: 1.5; }
+
+    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin: 15px 0 30px; }
+    .owner-card { background: #fff; border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #f0f0f0; }
+    .owner-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 2px solid var(--primary); display: block; }
+    .owner-card h3 { font-size: 14px; color: #111; }
+    
+    .promise-card { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f3 100%); border-radius: 12px; padding: 14px; margin-bottom: 25px; text-align: center; border: 1px solid #c8e6c9; }
+    .promise-list { font-size: 13px; font-weight: 700; color: var(--primary-dark); }
+
+    /* LEGAL PAGES UI */
+    .policy-box { background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0ebe1; }
+    .policy-box h2 { color: var(--primary); font-size: 22px; margin-bottom: 15px; }
+    .policy-box ul { margin-left: 20px; margin-bottom: 20px; }
+    .policy-box li { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 8px; }
+    .policy-box p { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 12px; }
+    .policy-footer { margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; color: var(--primary-dark); font-weight: bold; }
+
+    /* FOOTER */
     footer.main-footer { background: var(--primary-dark); color: #e8f5e9; padding: 40px 20px 20px; margin-top: 40px; }
     .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.15); }
     .footer-col h3, .footer-col h4 { font-size: 16px; color: #ffffff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
@@ -147,6 +168,7 @@
   <div id="toast">Item added to cart!</div>
 
   <div class="container">
+    <!-- HOME PAGE -->
     <div id="home" class="section active">
       <div class="live-status-bar">
         <span class="green-dot"></span>
@@ -196,19 +218,31 @@
       <div id="productGrid" class="product-grid"></div>
     </div>
 
+    <!-- OUR STORY PAGE (COMPACT & NEAT) -->
     <div id="about" class="section">
-      <h2 style="color: var(--primary-dark); font-size: 24px; margin-bottom: 6px;">Our Story</h2>
+      <h2 style="color: var(--primary-dark); font-size: 22px; margin-bottom: 8px;">Our Story</h2>
       <div class="about-stories-grid">
         <div class="story-card">
           <h3>🌱 How We Started</h3>
-          <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep.</p>
+          <p>Green House started with a simple idea — to make fresh vegetables and fruits easily available at your doorstep. We started locally with direct customer orders through WhatsApp, focusing on freshness, quality and reliable service.</p>
         </div>
         <div class="story-card">
           <h3>🛒 How We Purchase</h3>
-          <p>We carefully select vegetables and fruits based on freshness and quality directly from trusted local farmers.</p>
+          <p>We carefully select vegetables and fruits based on freshness and quality. We purchase products from trusted local farmers, growers and wholesale markets, choosing fresh produce according to customer demand.</p>
+        </div>
+        <div class="story-card">
+          <h3>🚚 How We Deliver</h3>
+          <p>Once you place your order, we confirm it, carefully pack the products, and arrange doorstep delivery within our service area fresh, safely and on time.</p>
         </div>
       </div>
-      <h3 style="font-size: 20px; margin-top: 30px;">Leadership Team</h3>
+
+      <div class="promise-card">
+        <div class="promise-list">
+          💚 Fresh Products • Fair Pricing • Easy Ordering • Doorstep Delivery
+        </div>
+      </div>
+
+      <h3 style="font-size: 18px; margin-top: 20px;">Leadership Team</h3>
       <div id="ownerContainer" class="owner-grid"></div>
     </div>
 
@@ -217,6 +251,51 @@
       <h2 style="font-size: 22px; color: var(--text);">Your Shopping Cart</h2>
       <div id="cartItems" class="cart-container-box">Your cart is empty.</div>
     </div>
+
+    <!-- TERMS & CONDITIONS PAGE -->
+    <div id="terms" class="section">
+      <div class="policy-box">
+        <h2>Terms & Conditions</h2>
+        <ul>
+          <li>All products are subject to availability.</li>
+          <li>Product images may slightly differ from the actual product.</li>
+          <li>Prices may change based on market and seasonal availability.</li>
+          <li>Please provide the correct delivery address and contact number.</li>
+          <li>Delivery time may vary due to traffic, weather and other unexpected situations.</li>
+          <li>Fresh fruits and vegetables may naturally vary in size, colour and appearance.</li>
+          <li>If you receive a damaged or wrong product, please contact us immediately after delivery.</li>
+          <li>Cancellation or replacement is subject to our policy.</li>
+          <li>By placing an order, you agree to our Terms & Conditions.</li>
+        </ul>
+        <div class="policy-footer">
+          Green House Fresh Farm<br>
+          <small style="font-weight: normal;">Fresh • Healthy • Delivered to Your Door</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIVACY POLICY PAGE -->
+    <div id="privacy" class="section">
+      <div class="policy-box">
+        <h2>Privacy Policy</h2>
+        <p>At Green House Fresh Farm, we respect your privacy and keep your information safe.</p>
+        <ul>
+          <li>We collect only the details needed to process your order and delivery.</li>
+          <li>This may include your name, phone number, delivery address and payment details.</li>
+          <li>Your information is used only for orders, delivery, customer support and service updates.</li>
+          <li>We do not sell or share your personal information with third parties for marketing purposes.</li>
+          <li>Payment details are processed securely through our payment service providers.</li>
+          <li>We take reasonable steps to protect your personal information.</li>
+          <li>By using our website or placing an order, you agree to this Privacy Policy.</li>
+        </ul>
+        <p>For any questions about your personal information, please contact Green House Fresh Farm.</p>
+        <div class="policy-footer">
+          Green House Fresh Farm<br>
+          <small style="font-weight: normal;">Fresh • Healthy • Delivered to Your Door</small>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <footer class="main-footer">
@@ -227,23 +306,25 @@
         <p><b>Phone:</b> <span class="contactPhoneVal">987654321</span></p>
         <p><b>Email:</b> <span class="contactEmailVal">abc@gmail.com</span></p>
       </div>
+
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
           <li><a onclick="showSection('home')">Home</a></li>
           <li><a onclick="showSection('about')">Our Story</a></li>
-          <li><a onclick="showSection('cart')">Cart</a></li>
+          <li><a onclick="openWhatsAppChat()">WhatsApp Support</a></li>
         </ul>
       </div>
+
       <div class="footer-col">
         <h4>Legal</h4>
         <ul>
-          <li><a href="#" onclick="alert('Terms & Policies'); return false;">Terms & Policies</a></li>
-          <li><a href="#" onclick="alert('Privacy Policy'); return false;">Privacy Policy</a></li>
+          <li><a onclick="showSection('terms')">Terms & Conditions</a></li>
+          <li><a onclick="showSection('privacy')">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 Green House FreshMart</div>
+    <div class="footer-bottom">&copy; 2026 Green House FreshMart. All rights reserved.</div>
   </footer>
 
   <div class="floating-controls">
@@ -309,9 +390,9 @@
       if (!owners || !owners.length) return;
       container.innerHTML = owners.map(o => `
         <div class="owner-card">
-          <img src="${o.photo || 'https://via.placeholder.com/100'}" alt="${o.name}">
+          <img src="${o.photo || 'https://via.placeholder.com/80'}" alt="${o.name}">
           <h3>${o.name}</h3>
-          <div style="font-size:12px; font-weight:700; color:var(--primary);">${o.designation}</div>
+          <div style="font-size:11px; font-weight:700; color:var(--primary);">${o.designation}</div>
         </div>
       `).join('');
     }
@@ -379,7 +460,6 @@
       renderCart();
     }
 
-    // GPS Live Location Fetch
     function getLocation() {
       const btn = document.getElementById("locBtn");
       if (navigator.geolocation) {
@@ -489,7 +569,6 @@
       const address = document.getElementById("custAddress").value;
       const payMode = document.querySelector('input[name="payMode"]:checked').value;
 
-      // Construct WhatsApp Bill
       let bill = `*GREEN HOUSE FRESHMART - INVOICE*\n`;
       bill += `----------------------------------------\n`;
       bill += `*Customer:* ${name}\n`;
@@ -514,20 +593,16 @@
         bill += `----------------------------------------\n`;
         bill += `💚 Thank you for shopping with Green House FreshMart! Your order will be delivered shortly.`;
 
-        // Deep Link for UPI App
         const merchantUpi = appConfig.merchantUpiId;
         const upiUrl = `upi://pay?pa=${merchantUpi}&pn=GreenHouseFreshMart&am=${totalAmount}&cu=INR&tn=Order_Payment`;
         
-        // Open UPI app
         window.location.href = upiUrl;
 
-        // Open WhatsApp bill with delay
         setTimeout(() => {
           window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
         }, 2000);
 
       } else {
-        // COD FLOW
         bill += `*Payment Status:* PENDING (Cash on Delivery)\n`;
         bill += `----------------------------------------\n`;
         bill += `💚 Thank you for your order! Please keep ₹${totalAmount} ready in cash.`;
