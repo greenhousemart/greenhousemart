@@ -20,28 +20,34 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-top: 75px; }
 
-    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; padding: 10px 16px; }
-    .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
-
-    .search-container { position: relative; flex: 1; max-width: 450px; }
-    .search-container input { width: 100%; padding: 8px 12px 8px 36px; border-radius: 20px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13px; }
-    .search-container i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #777; font-size: 14px; }
+    /* PERFECT HEADER ALIGNMENT (Left Logo, Center Search, Right Nav) */
+    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; padding: 10px 20px; }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     
-    .desktop-nav { display: flex; align-items: center; gap: 16px; }
-    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; }
-    .cart-badge { background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 2px 6px; position: relative; top: -1px; }
+    /* LEFT: BRAND & LOGO */
+    .brand { font-size: 19px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; cursor: pointer; white-space: nowrap; }
+    .brand-logo-img { height: 38px; width: auto; object-fit: contain; }
 
-    @media (max-width: 768px) {
+    /* CENTER: SEARCH BAR */
+    .search-container { position: relative; flex: 1; max-width: 480px; margin: 0 auto; }
+    .search-container input { width: 100%; padding: 8px 14px 8px 38px; border-radius: 20px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px; }
+    .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
+    
+    /* RIGHT: NAVIGATION */
+    .desktop-nav { display: flex; align-items: center; gap: 20px; }
+    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; }
+    .desktop-nav a i { font-size: 15px; color: #333; }
+    .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
+
+    /* MOBILE RESPONSIVE LAYOUT */
+    @media (max-width: 850px) {
       body { padding-top: 115px; }
-      .header-container { flex-wrap: wrap; gap: 8px; }
+      .header-container { flex-wrap: wrap; justify-content: space-between; gap: 8px; }
       .brand { font-size: 16px; }
+      .brand-logo-img { height: 32px; }
       .desktop-nav { gap: 12px; }
-      .desktop-nav a { font-size: 12.5px; }
-      .desktop-nav a span.nav-text { display: none; }
-      .desktop-nav a i { font-size: 18px; color: var(--primary); }
-      .search-container { order: 3; flex: 100%; width: 100%; max-width: 100%; }
-      .cart-badge { font-size: 9px; padding: 1px 5px; margin-left: -2px; }
+      .desktop-nav a { font-size: 13px; }
+      .search-container { order: 3; flex: 100%; width: 100%; max-width: 100%; margin-top: 2px; }
     }
 
     .container { max-width: 1280px; margin: 0 auto; padding: 0 12px 30px; }
@@ -164,23 +170,32 @@
 </head>
 <body>
 
+  <!-- HEADER WITH LEFT LOGO, CENTER SEARCH, RIGHT NAV -->
   <header>
     <div class="header-container">
-      <a class="brand" onclick="showSection('home')"><i class="fa-solid fa-leaf"></i> Green House FreshMart</a>
       
-      <nav class="desktop-nav">
-        <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span class="nav-text">Home</span></a>
-        <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span class="nav-text">Our Story</span></a>
-        <a onclick="showSection('cart')">
-          <i class="fa-solid fa-cart-shopping"></i> <span class="nav-text">Cart</span>
-          <span class="cart-badge" id="cartCount">0</span>
-        </a>
-      </nav>
+      <!-- LEFT: LOGO & NAME -->
+      <a class="brand" onclick="showSection('home')">
+        <i class="fa-solid fa-leaf"></i>
+        <span>Green House FreshMart</span>
+      </a>
 
+      <!-- CENTER: SEARCH BAR -->
       <div class="search-container">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
       </div>
+
+      <!-- RIGHT: MENU -->
+      <nav class="desktop-nav">
+        <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+        <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span>Our Story</span></a>
+        <a onclick="showSection('cart')">
+          <i class="fa-solid fa-cart-shopping"></i> <span>Cart</span>
+          <span class="cart-badge" id="cartCount">0</span>
+        </a>
+      </nav>
+
     </div>
   </header>
 
@@ -332,7 +347,6 @@
     const HUB_LAT = 12.9961;
     const HUB_LNG = 80.1983;
 
-    // Hardcode values completely removed
     let appConfig = { whatsappNumber: "", merchantUpiId: "" };
     let products = [];
     let cart = [];
@@ -376,7 +390,6 @@
           if (data.ownerDetails) renderOwners(data.ownerDetails);
           if (data.contacts) renderContacts(data.contacts);
           
-          // DYNAMICALLY SYNC WHATSAPP NUMBER & UPI ID FROM SHEET 2 OWNER
           if (data.config) {
             if (data.config.whatsappNumber) appConfig.whatsappNumber = data.config.whatsappNumber;
             if (data.config.merchantUpiId) appConfig.merchantUpiId = data.config.merchantUpiId;
