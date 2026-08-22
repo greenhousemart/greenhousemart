@@ -10,85 +10,161 @@
       --primary: #2e7d32;
       --primary-dark: #1b5e20;
       --accent-orange: #f57c00;
+      --accent-light: #e8f5e9;
       --bg: #f4f6f4;
       --text: #1b2e1c;
       --text-muted: #556b56;
       --whatsapp: #25d366;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-top: 75px; padding-bottom: 40px; }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-top: 80px; padding-bottom: 40px; }
+
+    /* Header & Navigation */
     header {
       position: fixed; top: 0; left: 0; right: 0;
-      background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      z-index: 1000; padding: 10px 15px;
+      background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      z-index: 1000; padding: 12px 20px;
     }
-    .header-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-    .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
+    .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
 
-    .search-container { position: relative; flex: 1; max-width: 450px; }
+    .search-container { position: relative; flex: 1; max-width: 500px; }
     .search-container input {
-      width: 100%; padding: 9px 12px 9px 36px; border-radius: 20px;
-      border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px;
+      width: 100%; padding: 10px 14px 10px 40px; border-radius: 25px;
+      border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 14px; transition: all 0.2s;
     }
-    .search-container i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
+    .search-container input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1); }
+    .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #777; font-size: 15px; }
     
-    .desktop-nav { display: flex; align-items: center; gap: 18px; }
-    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .desktop-nav { display: flex; align-items: center; gap: 22px; }
+    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: color 0.2s; }
     .desktop-nav a:hover { color: var(--primary); }
-    .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 6px; }
+    .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 7px; }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 12px; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
     .section { display: none; }
     .section.active { display: block; }
 
-    /* Hero Banner */
-    .hero-banner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: center; background: #f1f8f3; border-radius: 18px; padding: 20px 22px; margin-bottom: 20px; }
-    .hero-title { font-size: 26px; font-weight: 800; color: var(--text); }
+    /* Live Status Bar */
+    .live-status-bar { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin: 0 0 12px auto; font-size: 12px; font-weight: 600; color: #555; }
+    .green-dot { width: 8px; height: 8px; background-color: #2e7d32; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(46, 125, 50, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+    }
+
+    /* PREMIUM EXPANDED HERO BANNER */
+    .hero-banner-expanded {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      background: linear-gradient(135deg, #ffffff 0%, #f1f8f3 100%);
+      border: 1px solid #e2ece3;
+      border-radius: 24px;
+      padding: 35px 40px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .hero-content { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+    .badge-pill {
+      background: var(--accent-light); color: var(--primary); font-size: 12px; font-weight: 700;
+      padding: 6px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid #c8e6c9;
+    }
+
+    .hero-title { font-size: 38px; font-weight: 800; line-height: 1.2; color: var(--text); letter-spacing: -0.5px; }
     .hero-title span.highlight { color: var(--accent-orange); }
+    .hero-subtitle { font-size: 15px; color: var(--text-muted); line-height: 1.5; max-width: 520px; }
 
-    /* Product Grid */
-    .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .hero-actions { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+    .btn-shop-now {
+      background: var(--primary); color: #fff; padding: 12px 28px; border-radius: 25px;
+      font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 4px 14px rgba(46, 125, 50, 0.3);
+    }
+    .btn-shop-now:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .btn-our-story {
+      background: #fff; color: var(--text); border: 1px solid #d0dcd2; padding: 12px 24px;
+      border-radius: 25px; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-our-story:hover { background: #f5f8f5; }
+
+    .hero-features { display: flex; align-items: center; gap: 28px; margin-top: 10px; border-top: 1px solid #e0ebe1; padding-top: 16px; width: 100%; }
+    .feature-item { display: flex; flex-direction: column; }
+    .feature-title { font-weight: 800; font-size: 15px; color: var(--text); }
+    .feature-subtitle { font-size: 11px; color: var(--text-muted); }
+
+    /* HIGH-QUALITY SLIDER CAROUSEL */
+    .hero-slider-container {
+      position: relative; width: 100%; height: 320px; border-radius: 20px;
+      overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+    .hero-slider-track { display: flex; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+    .slide-item { min-width: 100%; height: 100%; position: relative; }
+    .slide-item img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+      padding: 20px 18px 14px; color: #fff; font-weight: 700; font-size: 15px;
+    }
+
+    .slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+    .dot { width: 8px; height: 8px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; cursor: pointer; transition: all 0.3s; }
+    .dot.active { background: #fff; width: 22px; border-radius: 10px; }
+
+    @media (max-width: 900px) {
+      .hero-banner-expanded { grid-template-columns: 1fr; padding: 22px; gap: 20px; }
+      .hero-title { font-size: 28px; }
+      .hero-slider-container { height: 230px; }
+      .hero-features { gap: 16px; }
+    }
+
+    /* Product Grid Styling */
+    .filter-tabs-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
     .filter-tabs { display: flex; gap: 8px; }
-    .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 8px 18px; border-radius: 20px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(46, 125, 50, 0.25); }
 
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
-    .product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-    .product-card img { width: 100%; height: 135px; object-fit: cover; }
-    .discount-badge { position: absolute; top: 8px; left: 8px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 6px; border-radius: 5px; }
-    .product-card h3 { font-size: 13.5px; padding: 0 6px; color: #222; margin: 6px 0; }
-    .variant-select { width: calc(100% - 16px); margin: 4px auto 6px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 12px; }
-    .price-block { margin-bottom: 6px; }
-    .price { font-size: 15.5px; font-weight: bold; color: var(--primary); }
-    .btn { background: var(--primary); color: #fff; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-weight: 600; width: calc(100% - 16px); margin: 0 auto; font-size: 13px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+    .product-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; }
+    .product-card img { width: 100%; height: 145px; object-fit: cover; }
+    .discount-badge { position: absolute; top: 10px; left: 10px; background: #e53935; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 6px; }
+    .product-card h3 { font-size: 14px; padding: 0 8px; color: #222; margin: 8px 0 4px; }
+    .variant-select { width: calc(100% - 20px); margin: 4px auto 8px; padding: 6px; border-radius: 6px; border: 1px solid #ccc; font-size: 12px; }
+    .price { font-size: 16px; font-weight: bold; color: var(--primary); }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 20px); margin: 0 auto; font-size: 13px; }
 
-    /* Our Story Section */
-    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 16px 0; }
-    .story-card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid var(--primary); }
-    .story-card h3 { font-size: 15px; color: var(--primary); margin-bottom: 6px; }
-    .story-card p { font-size: 13px; color: #555; line-height: 1.5; }
+    /* Our Story Cards */
+    .about-stories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+    .story-card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border-left: 5px solid var(--primary); }
+    .story-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
+    .story-card p { font-size: 13.5px; color: #555; line-height: 1.6; }
+
+    .promise-card { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f3 100%); border-radius: 14px; padding: 18px; margin-bottom: 25px; text-align: center; border: 1px solid #c8e6c9; }
+    .promise-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 20px; font-weight: 700; font-size: 14px; color: var(--primary-dark); }
+
+    /* Leadership Cards */
+    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; margin: 20px 0 30px; }
+    .owner-card { background: #fff; border-radius: 14px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
+    .owner-card img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; border: 3px solid var(--primary); display: block; }
+    .owner-card h3 { font-size: 15px; color: #111; margin-bottom: 2px; }
+    .owner-card .desig { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .owner-card .sub { font-size: 12px; color: #666; margin-top: 4px; }
+
+    /* Contact Us Card */
+    .contact-card-box { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin: 30px 0 15px; border: 1px solid #eaeaea; }
+    .contact-card-box h3 { font-size: 17px; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .contact-card-box p { font-size: 14px; color: #444; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+    footer { background: #1b2e1c; color: #fff; padding: 25px 15px; margin-top: 40px; text-align: center; font-size: 13px; }
     
-    .promise-card { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f3 100%); border-radius: 12px; padding: 16px; margin-bottom: 22px; text-align: center; border: 1px solid #c8e6c9; }
-    .promise-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 16px; font-weight: 700; font-size: 13px; color: var(--primary-dark); }
-
-    /* Leadership Grid (Sheet 2) */
-    .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin: 16px 0 25px; }
-    .owner-card { background: #fff; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .owner-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 3px solid var(--primary); display: block; }
-    .owner-card h3 { font-size: 14px; color: #111; margin-bottom: 2px; }
-    .owner-card .desig { font-size: 12px; font-weight: 700; color: var(--primary); }
-    .owner-card .sub { font-size: 11px; color: #666; margin-top: 4px; }
-
-    /* Contact Us Card (Sheet 3) */
-    .contact-card-box { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin: 25px 0 15px; }
-    .contact-card-box h3 { font-size: 16px; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    .contact-card-box p { font-size: 13.5px; color: #444; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-
-    footer { background: #1b2e1c; color: #fff; padding: 20px 15px; margin-top: 30px; text-align: center; font-size: 12px; }
-    
-    .floating-controls { position: fixed; right: 15px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-    .float-btn { width: 48px; height: 48px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .floating-controls { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; }
+    .float-btn { width: 50px; height: 50px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 21px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.22); transition: transform 0.2s; }
+    .float-btn:hover { transform: scale(1.08); }
     .home-float { background: var(--primary); }
     .whatsapp-float { background: var(--whatsapp); }
   </style>
@@ -114,15 +190,62 @@
 
     <!-- HOME PAGE -->
     <div id="home" class="section active">
-      <div class="hero-banner">
-        <div>
+      <div class="live-status-bar">
+        <span class="green-dot"></span>
+        <span>Live Updates: <span id="liveClock">--:--:--</span></span>
+      </div>
+
+      <!-- EXPANDED HIGH-QUALITY HERO BANNER -->
+      <div class="hero-banner-expanded">
+        <div class="hero-content">
+          <div class="badge-pill">🚚 Same-day delivery across Chennai</div>
           <h1 class="hero-title">Farm fresh <span class="highlight">fruits & veggies,</span> straight to your door.</h1>
-          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Hand-picked daily, hygienically packed, and delivered fresh.</p>
+          <p class="hero-subtitle">Hand-picked daily, hygienically packed, and delivered fresh — no middlemen, no compromise on quality.</p>
+          
+          <div class="hero-actions">
+            <button class="btn-shop-now" onclick="scrollToProducts()">Shop Now</button>
+            <button class="btn-our-story" onclick="showSection('about')">Our Story</button>
+          </div>
+
+          <div class="hero-features">
+            <div class="feature-item"><span class="feature-title">100%</span><span class="feature-subtitle">Farm Direct</span></div>
+            <div class="feature-item"><span class="feature-title">Daily</span><span class="feature-subtitle">Fresh Harvest</span></div>
+            <div class="feature-item"><span class="feature-title" style="color:var(--accent-orange);"><i class="fa-solid fa-bolt"></i> Fast</span><span class="feature-subtitle">Home Delivery</span></div>
+          </div>
+        </div>
+
+        <!-- SLIDING IMAGE CAROUSEL -->
+        <div class="hero-slider-container">
+          <div class="hero-slider-track" id="sliderTrack">
+            <div class="slide-item">
+              <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1000&q=80" alt="Fresh Fruits & Veggies">
+              <div class="slide-overlay">100% Farm Fresh & Organic Produce</div>
+            </div>
+            <div class="slide-item">
+              <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1000&q=80" alt="Fresh Vegetables">
+              <div class="slide-overlay">Daily Harvested Crisp Vegetables</div>
+            </div>
+            <div class="slide-item">
+              <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=1000&q=80" alt="Juicy Fruits">
+              <div class="slide-overlay">Sweet, Hand-Picked Seasonal Fruits</div>
+            </div>
+            <div class="slide-item">
+              <img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=1000&q=80" alt="Hygienic Packing">
+              <div class="slide-overlay">Hygienically Packed & Delivered Safe</div>
+            </div>
+          </div>
+
+          <div class="slider-dots" id="sliderDots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+            <span class="dot" onclick="goToSlide(2)"></span>
+            <span class="dot" onclick="goToSlide(3)"></span>
+          </div>
         </div>
       </div>
 
-      <div class="filter-tabs-container">
-        <h2>Fresh Produce</h2>
+      <div class="filter-tabs-container" id="productSectionTitle">
+        <h2 style="font-size: 20px;">Fresh Produce</h2>
         <div class="filter-tabs">
           <button class="tab-btn active" onclick="setCategoryFilter('all', this)">All</button>
           <button class="tab-btn" onclick="setCategoryFilter('fruits', this)">Fruits</button>
@@ -132,7 +255,7 @@
 
       <div id="productGrid" class="product-grid"></div>
 
-      <!-- Contact Us at Home Bottom (Synced from Sheet 3) -->
+      <!-- Contact Us Card (Home Bottom) -->
       <div class="contact-card-box">
         <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
         <p><b>Address:</b> <span class="contactAddressVal">Chennai</span></p>
@@ -143,7 +266,7 @@
 
     <!-- OUR STORY PAGE -->
     <div id="about" class="section">
-      <h2 style="color: var(--primary-dark);">Our Story</h2>
+      <h2 style="color: var(--primary-dark); font-size: 24px; margin-bottom: 6px;">Our Story</h2>
 
       <div class="about-stories-grid">
         <div class="story-card">
@@ -161,7 +284,7 @@
       </div>
 
       <div class="promise-card">
-        <h3>💚 Our Promise</h3>
+        <h3 style="margin-bottom: 6px;">💚 Our Promise</h3>
         <div class="promise-list">
           <span>Fresh Products</span> •
           <span>Fair Pricing</span> •
@@ -170,11 +293,9 @@
         </div>
       </div>
 
-      <!-- Leadership Team (Synced from Sheet 2 Owner) -->
-      <h3 style="font-size: 18px; margin-top: 25px;">Leadership Team</h3>
+      <h3 style="font-size: 20px; margin-top: 30px;">Leadership Team</h3>
       <div id="ownerContainer" class="owner-grid"></div>
 
-      <!-- Contact Us at Story Bottom (Synced from Sheet 3) -->
       <div class="contact-card-box">
         <h3><i class="fa-solid fa-address-book"></i> Contact Us</h3>
         <p><b>Address:</b> <span class="contactAddressVal">Chennai</span></p>
@@ -199,15 +320,52 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyAGxm_zOiS7bXRXCYTcmQzeFV9CMb7EJ82DEq5f5LaWCnS1FmTwAa7u1HdBDYyL4NJKw/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwXrbjrE6JBiPKuBEj6DA2EIHILNDOmlPOV7e_stMGUujrI2Xej9cgxWS54xsW9asvmZQ/exec";
 
     let appConfig = { whatsappNumber: "987654321" };
     let products = [];
     let currentCategory = "all";
+    let currentSlide = 0;
+    const totalSlides = 4;
 
     function init() {
+      startLiveClock();
+      startAutoSlider();
       loadFastCache();
       fetchLiveSheetData();
+    }
+
+    function startLiveClock() {
+      setInterval(() => {
+        const now = new Date();
+        document.getElementById("liveClock").innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      }, 1000);
+    }
+
+    function startAutoSlider() {
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+      }, 3800);
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    function updateSlider() {
+      const track = document.getElementById("sliderTrack");
+      if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      const dots = document.querySelectorAll(".slider-dots .dot");
+      dots.forEach((dot, idx) => {
+        if (idx === currentSlide) dot.classList.add("active");
+        else dot.classList.remove("active");
+      });
+    }
+
+    function scrollToProducts() {
+      document.getElementById("productSectionTitle").scrollIntoView({ behavior: 'smooth' });
     }
 
     function loadFastCache() {
@@ -226,13 +384,11 @@
       try {
         const res = await fetch(API_URL);
         const data = await res.json();
-        
         if (data && data.products) {
           products = data.products;
           filterProducts();
           if (data.ownerDetails) renderOwners(data.ownerDetails);
           if (data.contacts) renderContacts(data.contacts);
-          
           localStorage.setItem("ghfm_fast_cache", JSON.stringify(data));
         }
       } catch (err) {
@@ -240,11 +396,9 @@
       }
     }
 
-    // Render Leadership Team (Sheet 2: Owner)
     function renderOwners(owners) {
       const container = document.getElementById("ownerContainer");
       if (!owners || !owners.length) return;
-      
       container.innerHTML = owners.map(o => {
         const validPhoto = (o.photo && o.photo.startsWith("http")) ? o.photo : "https://via.placeholder.com/100?text=" + encodeURIComponent(o.name);
         return `
@@ -258,7 +412,6 @@
       }).join('');
     }
 
-    // Render Contact Us (Sheet 3: Contacts)
     function renderContacts(contacts) {
       if (contacts["Address"]) {
         document.querySelectorAll(".contactAddressVal").forEach(el => el.innerText = contacts["Address"]);
