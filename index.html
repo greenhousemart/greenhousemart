@@ -20,32 +20,33 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-top: 75px; }
 
-    /* CLEAN & NON-CONGESTED HEADER DESIGN */
-    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; padding: 10px 16px; }
+    /* EXACT HEADER: LEFT COMPANY NAME, CENTER SEARCH, RIGHT NAV */
+    header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1000; padding: 10px 20px; }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     
-    .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
+    /* LEFT: COMPANY NAME ONLY */
+    .brand { font-size: 19px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; }
 
+    /* CENTER: SEARCH BAR */
     .search-container { position: relative; flex: 1; max-width: 480px; margin: 0 auto; }
     .search-container input { width: 100%; padding: 8px 14px 8px 38px; border-radius: 20px; border: 1px solid #d0dcd2; background: #f8faf8; outline: none; font-size: 13.5px; }
     .search-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #666; font-size: 14px; }
     
-    .desktop-nav { display: flex; align-items: center; gap: 18px; }
-    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 5px; position: relative; white-space: nowrap; }
-    .desktop-nav a i { font-size: 14px; color: #333; }
-    .cart-badge { background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
+    /* RIGHT: MENU (HOME, OUR STORY, CART) */
+    .desktop-nav { display: flex; align-items: center; gap: 20px; }
+    .desktop-nav a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; white-space: nowrap; }
+    .desktop-nav a i { font-size: 15px; color: #333; }
+    .cart-badge { background: #e53935; color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
 
-    /* MOBILE SPECIFIC HEADER OPTIMIZATION (FIXES CONGESTION) */
+    /* MOBILE UI PRESERVED STYLES */
     @media (max-width: 768px) {
       body { padding-top: 105px; }
       header { padding: 8px 12px; }
       .header-container { display: grid; grid-template-columns: 1fr auto; gap: 8px 10px; align-items: center; }
-      
       .brand { font-size: 15px; grid-column: 1; }
       .desktop-nav { grid-column: 2; gap: 12px; }
       .desktop-nav a { font-size: 12px; }
       .desktop-nav a i { font-size: 13px; }
-      
       .search-container { grid-column: 1 / -1; width: 100%; max-width: 100%; margin-top: 2px; }
       .search-container input { padding: 7px 12px 7px 34px; font-size: 12.5px; }
       .search-container i { left: 12px; font-size: 13px; }
@@ -178,17 +179,23 @@
 </head>
 <body>
 
-  <!-- MOBILE OPTIMIZED HEADER -->
+  <!-- HEADER STRUCTURE -->
   <header>
     <div class="header-container">
       
-      <!-- BRAND LOGO & NAME -->
+      <!-- LEFT: COMPANY NAME -->
       <a class="brand" onclick="showSection('home')">
         <i class="fa-solid fa-leaf"></i>
         <span>Green House FreshMart</span>
       </a>
 
-      <!-- MENU NAVIGATION -->
+      <!-- CENTER: SEARCH BAR -->
+      <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
+      </div>
+
+      <!-- RIGHT: MENU (HOME, OUR STORY, CART) -->
       <nav class="desktop-nav">
         <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span>Home</span></a>
         <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span>Our Story</span></a>
@@ -197,12 +204,6 @@
           <span class="cart-badge" id="cartCount">0</span>
         </a>
       </nav>
-
-      <!-- SEARCH BAR (2ND ROW ON MOBILE, CENTER ON DESKTOP) -->
-      <div class="search-container">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
-      </div>
 
     </div>
   </header>
@@ -362,6 +363,7 @@
     const HUB_LAT = 12.9961;
     const HUB_LNG = 80.1983;
 
+    // Completely empty - Fetching live from Google Sheet
     let appConfig = { whatsappNumber: "", merchantUpiId: "" };
     let products = [];
     let cart = [];
@@ -635,7 +637,7 @@
 
         ${isOutOfService ? `<div class="delivery-badge-note" style="background:#ffebee; border-left-color:#e53935; color:#c62828;">❌ Sorry, delivery is only available within 15 km radius.</div>` : ''}
 
-        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
+        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryFee}, ${grandTotal}, ${totalDiscount})">
           
           <div class="form-group">
             <label><i class="fa-solid fa-map-location-dot" style="color:var(--primary);"></i> Select Delivery Location on Map *</label>
@@ -737,7 +739,7 @@
       bill += `*Delivery Fee:* ₹${deliveryFee}\n`;
       bill += `*TOTAL BILL AMOUNT:* ₹${grandTotal}\n`;
 
-      let targetWhatsapp = appConfig.whatsappNumber || "9876543210";
+      let targetWhatsapp = appConfig.whatsappNumber;
       if (targetWhatsapp.length === 10) targetWhatsapp = "91" + targetWhatsapp;
 
       if (payMode === "UPI") {
@@ -752,7 +754,9 @@
         window.location.href = upiUrl;
 
         setTimeout(() => {
-          window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
+          if (targetWhatsapp) {
+            window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
+          }
         }, 2000);
 
       } else {
@@ -761,7 +765,9 @@
         bill += `----------------------------------------\n`;
         bill += `💚 Thank you for your order! Please keep ₹${grandTotal} ready in cash for delivery.`;
 
-        window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
+        if (targetWhatsapp) {
+          window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
+        }
       }
     }
 
@@ -786,9 +792,11 @@
     }
 
     function openWhatsAppChat() {
-      let phoneNum = appConfig.whatsappNumber || "9876543210";
+      let phoneNum = appConfig.whatsappNumber;
       if(phoneNum.length === 10) phoneNum = "91" + phoneNum;
-      window.open(`https://wa.me/${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance.")}`, '_blank');
+      if (phoneNum) {
+        window.open(`https://wa.me/${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance.")}`, '_blank');
+      }
     }
   </script>
 </body>
