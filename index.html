@@ -3,7 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Green House FreshMart</title>
+  
+  <!-- SEO PRIMARY META TAGS -->
+  <title>Green House FreshMart | Farm Fresh Vegetables & Fruits Online</title>
+  <meta name="title" content="Green House FreshMart | Farm Fresh Vegetables & Fruits Online">
+  <meta name="description" content="Buy 100% farm fresh fruits and organic vegetables online at Green House FreshMart. Same-day delivery across Chennai with live GPS tracking!">
+  <meta name="keywords" content="Green House FreshMart, fresh vegetables online Chennai, buy organic fruits, farm fresh produce, daily fresh veggies delivery">
+  <meta name="author" content="Green House FreshMart">
+  <meta name="robots" content="index, follow">
+
+  <!-- OPEN GRAPH / WHATSAPP / FACEBOOK LINK PREVIEW TAGS -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Green House FreshMart">
+  <meta property="og:title" content="*Green House FreshMart* - Farm Fresh Produce Online">
+  <meta property="og:description" content="Hand-picked daily, hygienically packed, and delivered fresh to your door in Chennai. Order online now!">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=80">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- TWITTER CARD TAGS -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="*Green House FreshMart*">
+  <meta name="twitter:description" content="Buy farm fresh fruits and organic vegetables online with same-day home delivery.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=80">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -20,7 +43,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-top: 70px; }
 
-    /* HEADER FIXES FOR CLICKABILITY */
     header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 999; padding: 8px 16px; }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     
@@ -35,7 +57,6 @@
     .desktop-nav a i { font-size: 14px; color: #333; }
     .cart-badge { background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
 
-    /* RESPONSIVE MOBILE LAYOUT */
     @media (max-width: 768px) {
       body { padding-top: 110px; }
       header { padding: 8px 10px; }
@@ -87,7 +108,6 @@
     .tab-btn { background: #fff; border: 1px solid #d0dcd2; color: #444; padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    /* PRODUCT GRID & CLICKABLE BUTTON FIXES */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
     .product-card { background: #fff; border-radius: 12px; overflow: hidden; padding-bottom: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.2s; z-index: 2; }
     
@@ -104,7 +124,6 @@
     .btn:hover { background: var(--primary-dark); }
     .btn:disabled { background: #aaa; cursor: not-allowed; }
 
-    /* CART & BILL RECEIPT */
     .cart-container-box { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border: 1px solid #e0ebe1; margin-top: 12px; }
     .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #e0e0e0; gap: 8px; }
     .cart-item-info h4 { font-size: 13.5px; color: var(--text); }
@@ -138,7 +157,6 @@
 
     .delivery-badge-note { font-size: 11.5px; font-weight: 600; color: #555; background: #f0f7f1; padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--primary); margin-top: 10px; }
 
-    /* OUR STORY PAGE */
     .about-page-wrapper { max-width: 1100px; margin: 0 auto; padding: 10px 0 30px; }
     .about-main-title { font-size: 24px; font-weight: 800; color: var(--primary-dark); margin-bottom: 18px; border-bottom: 3px solid var(--primary); display: inline-block; padding-bottom: 4px; }
     
@@ -178,23 +196,18 @@
 </head>
 <body>
 
-  <!-- FIXED HEADER -->
   <header>
     <div class="header-container">
-      
-      <!-- LEFT BRAND -->
       <a class="brand" onclick="showSection('home')">
         <i class="fa-solid fa-leaf"></i>
         <span>Green House FreshMart</span>
       </a>
 
-      <!-- CENTER SEARCH BAR -->
       <div class="search-container">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
       </div>
 
-      <!-- RIGHT NAV -->
       <nav class="desktop-nav">
         <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span>Home</span></a>
         <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span>Our Story</span></a>
@@ -203,7 +216,6 @@
           <span class="cart-badge" id="cartCount">0</span>
         </a>
       </nav>
-
     </div>
   </header>
 
@@ -491,7 +503,6 @@
       }
     }
 
-    /* FIXED ADD TO CART FUNCTION */
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       if (!product || !product.inStock) return;
