@@ -522,11 +522,18 @@
       renderProducts(filtered);
     }
 
+    function getDiscountedPrice(mrp, discountPercent) {
+      if (!discountPercent || discountPercent <= 0) return mrp;
+      return Math.round((mrp * (1 - discountPercent / 100)) * 100) / 100;
+    }
+
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
       if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
 
-      grid.innerHTML = list.map(p => `
+      grid.innerHTML = list.map(p => {
+        const firstFinal = getDiscountedPrice(p.variants[0].price, p.discountPercent);
+        return `
         <div class="product-card">
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
           <img src="${p.image}" onerror="this.src='https://via.placeholder.com/150'">
@@ -534,10 +541,14 @@
           <select id="variant_${p.id}" class="variant-select" onchange="updatePriceDisplay('${p.id}')">
             ${p.variants.map((v, i) => `<option value="${i}">${v.unit} - ₹${v.price}</option>`).join('')}
           </select>
-          <div class="price-block"><span class="price" id="price_${p.id}">₹${p.variants[0].price}</span></div>
+          <div class="price-block">
+            ${p.discountPercent > 0 ? `<span class="mrp-strike" id="mrp_${p.id}" style="text-decoration:line-through; color:#999; font-size:12px; margin-right:6px;">₹${p.variants[0].price}</span>` : ''}
+            <span class="price" id="price_${p.id}">₹${firstFinal}</span>
+          </div>
           <button class="btn" ${!p.inStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.inStock ? 'Add to Cart' : 'Out of Stock'}</button>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     function updatePriceDisplay(productId) {
@@ -547,8 +558,12 @@
       if (!selectElem) return;
       const variant = product.variants[selectElem.value];
       const priceSpan = document.getElementById(`price_${productId}`);
+      const mrpSpan = document.getElementById(`mrp_${productId}`);
       if (priceSpan && variant) {
-        priceSpan.innerText = `₹${variant.price}`;
+        priceSpan.innerText = `₹${getDiscountedPrice(variant.price, product.discountPercent)}`;
+      }
+      if (mrpSpan && variant) {
+        mrpSpan.innerText = `₹${variant.price}`;
       }
     }
 
@@ -559,6 +574,8 @@
       const selectElem = document.getElementById(`variant_${productId}`);
       const selectedIndex = selectElem ? parseInt(selectElem.value) : 0;
       const variant = product.variants[selectedIndex] || product.variants[0];
+      const discountPercent = product.discountPercent || 0;
+      const finalPrice = getDiscountedPrice(variant.price, discountPercent);
 
       const cartItemId = `${productId}_${variant.unit}`;
       const existing = cart.find(c => c.cartItemId === cartItemId);
@@ -571,8 +588,9 @@
           id: productId, 
           name: product.name,
           unit: variant.unit, 
-          price: variant.price, 
-          discountPercent: product.discountPercent || 0, 
+          mrp: variant.price,
+          price: finalPrice, 
+          discountPercent: discountPercent, 
           qty: 1
         });
       }
@@ -645,19 +663,15 @@
 
       let html = cart.map(item => {
         const itemTotal = item.price * item.qty;
+        const itemMrp = (item.mrp || item.price) * item.qty;
         subtotal += itemTotal;
-        if (item.discountPercent > 0) {
-          const origPrice = Math.round(item.price / (1 - (item.discountPercent/100)));
-          mrpSubtotal += origPrice * item.qty;
-          totalDiscount += (origPrice - item.price) * item.qty;
-        } else {
-          mrpSubtotal += itemTotal;
-        }
+        mrpSubtotal += itemMrp;
+        totalDiscount += (itemMrp - itemTotal);
         return `
           <div class="cart-item-row">
             <div class="cart-item-info">
               <h4>${item.name}</h4>
-              <span>${item.unit} • ₹${item.price} per unit</span>
+              <span>${item.unit} • ${item.discountPercent > 0 ? `<s style="color:#999;">₹${item.mrp}</s> ` : ''}₹${item.price} per unit</span>
             </div>
             <div class="qty-controls">
               <button class="qty-btn" onclick="updateCartQty('${item.cartItemId}', -1)">-</button>
