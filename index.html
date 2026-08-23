@@ -402,7 +402,7 @@
       <p>Fresh picks, offers & recipes.</p>
       <div class="footer-subscribe-row">
         <input type="email" id="footerSubscribeEmail" placeholder="your@email.com">
-        <button onclick="showToast('Thanks! You are subscribed.')"><i class="fa-solid fa-arrow-right"></i></button>
+        <button onclick="subscribeNewsletter()"><i class="fa-solid fa-arrow-right"></i></button>
       </div>
       <p class="fine-print">No spam. Unsubscribe anytime.</p>
     </div>
@@ -860,6 +860,22 @@
           window.open(`https://wa.me/${targetWhatsapp}?text=${encodeURIComponent(bill)}`, '_blank');
         }
       }
+    }
+
+    function subscribeNewsletter() {
+      const emailInput = document.getElementById("footerSubscribeEmail");
+      const email = emailInput.value.trim();
+      if (!email || email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+        showToast("Please enter a valid email");
+        return;
+      }
+      fetch(API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({ type: "subscribe", email: email })
+      }).catch(() => {});
+      showToast("Subscribed! You'll get combo offer alerts by email.");
+      emailInput.value = "";
     }
 
     function updateCartBadge() {
