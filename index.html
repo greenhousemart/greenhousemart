@@ -110,6 +110,12 @@
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
     .product-card { background: #fff; border-radius: 12px; overflow: hidden; padding-bottom: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.2s; z-index: 2; }
+
+    .skeleton-card { padding: 10px; gap: 8px; }
+    .skeleton-img, .skeleton-line { background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.2s infinite; border-radius: 6px; }
+    .skeleton-img { width: 100%; height: 100px; margin-bottom: 8px; }
+    .skeleton-line { height: 10px; margin: 5px auto; }
+    @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     
     .product-card img { width: 100%; height: 120px; object-fit: cover; }
     .discount-badge { position: absolute; top: 8px; left: 8px; background: #e53935; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 5;}
@@ -439,8 +445,49 @@
     document.addEventListener("DOMContentLoaded", function() {
       startLiveClock();
       startAutoSlider();
+      loadFromCacheInstantly();
       fetchLiveSheetData();
     });
+
+    const CACHE_KEY = "ghfm_cache_v1";
+
+    function loadFromCacheInstantly() {
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (!cached) {
+          showProductSkeleton();
+          return;
+        }
+        const data = JSON.parse(cached);
+        applySheetData(data);
+      } catch (err) {
+        showProductSkeleton();
+      }
+    }
+
+    function showProductSkeleton() {
+      const grid = document.getElementById("productGrid");
+      if (!grid) return;
+      let html = "";
+      for (let i = 0; i < 8; i++) {
+        html += `<div class="product-card skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line" style="width:80%;"></div><div class="skeleton-line" style="width:50%;"></div><div class="skeleton-line" style="width:100%; height:34px; margin-top:8px;"></div></div>`;
+      }
+      grid.innerHTML = html;
+    }
+
+    function applySheetData(data) {
+      if (data && data.products) {
+        products = data.products;
+        filterProducts();
+        if (data.ownerDetails) renderOwners(data.ownerDetails);
+        if (data.contacts) renderContacts(data.contacts);
+
+        if (data.config) {
+          if (data.config.whatsappNumber) appConfig.whatsappNumber = data.config.whatsappNumber;
+          if (data.config.merchantUpiId) appConfig.merchantUpiId = data.config.merchantUpiId;
+        }
+      }
+    }
 
     function startLiveClock() {
       setInterval(() => {
@@ -464,17 +511,10 @@
         const timestampUrl = API_URL + "?t=" + new Date().getTime();
         const res = await fetch(timestampUrl);
         const data = await res.json();
-        
+
         if (data && data.products) {
-          products = data.products;
-          filterProducts();
-          if (data.ownerDetails) renderOwners(data.ownerDetails);
-          if (data.contacts) renderContacts(data.contacts);
-          
-          if (data.config) {
-            if (data.config.whatsappNumber) appConfig.whatsappNumber = data.config.whatsappNumber;
-            if (data.config.merchantUpiId) appConfig.merchantUpiId = data.config.merchantUpiId;
-          }
+          applySheetData(data);
+          try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch (e) {}
         }
       } catch (err) { console.warn("Sheet fetch error:", err); }
     }
