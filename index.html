@@ -23,7 +23,6 @@
   <meta property="og:image" content="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=80">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://greenhousemart.github.io/greenhousemart/">
 
   <!-- TWITTER CARD TAGS -->
   <meta name="twitter:card" content="summary_large_image">
@@ -39,7 +38,6 @@
     "name": "Green House FreshMart",
     "alternateName": "Green House FreshMart Chennai",
     "description": "Online store selling fresh, farm-picked vegetables and fruits with same-day home delivery across Chennai.",
-    "url": "https://greenhousemart.github.io/greenhousemart/",
     "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=80",
     "priceRange": "₹₹",
     "areaServed": {
@@ -604,6 +602,16 @@
       return roundMoney(mrp * (1 - discountPercent / 100));
     }
 
+    // Combos already carry an explicit mrp + price from the sheet (Combo Price / MRP(Sum)),
+    // so that price IS the final charged amount - don't re-apply discount% on top of it.
+    // Regular products only carry a plain price (= MRP), so discount% must be applied forward.
+    function getFinalPriceInfo(product, variant) {
+      if (variant.mrp !== undefined && variant.mrp !== null && variant.mrp > 0) {
+        return { mrp: roundMoney(variant.mrp), price: roundMoney(variant.price) };
+      }
+      return { mrp: roundMoney(variant.price), price: getDiscountedPrice(variant.price, product.discountPercent) };
+    }
+
     function roundMoney(n) {
       return Math.round((Number(n) + Number.EPSILON) * 100) / 100;
     }
@@ -618,7 +626,7 @@
       if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
 
       grid.innerHTML = list.map(p => {
-        const firstFinal = getDiscountedPrice(p.variants[0].price, p.discountPercent);
+        const firstInfo = getFinalPriceInfo(p, p.variants[0]);
         return `
         <div class="product-card">
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
@@ -628,8 +636,8 @@
             ${p.variants.map((v, i) => `<option value="${i}">${v.unit} - ₹${formatMoney(v.price)}</option>`).join('')}
           </select>
           <div class="price-block">
-            ${p.discountPercent > 0 ? `<span class="mrp-strike" id="mrp_${p.id}" style="text-decoration:line-through; color:#999; font-size:12px; margin-right:6px;">₹${formatMoney(p.variants[0].price)}</span>` : ''}
-            <span class="price" id="price_${p.id}">₹${formatMoney(firstFinal)}</span>
+            ${p.discountPercent > 0 ? `<span class="mrp-strike" id="mrp_${p.id}" style="text-decoration:line-through; color:#999; font-size:12px; margin-right:6px;">₹${formatMoney(firstInfo.mrp)}</span>` : ''}
+            <span class="price" id="price_${p.id}">₹${formatMoney(firstInfo.price)}</span>
           </div>
           <button class="btn" ${!p.inStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.inStock ? 'Add to Cart' : 'Out of Stock'}</button>
         </div>
@@ -645,11 +653,10 @@
       const variant = product.variants[selectElem.value];
       const priceSpan = document.getElementById(`price_${productId}`);
       const mrpSpan = document.getElementById(`mrp_${productId}`);
-      if (priceSpan && variant) {
-        priceSpan.innerText = `₹${formatMoney(getDiscountedPrice(variant.price, product.discountPercent))}`;
-      }
-      if (mrpSpan && variant) {
-        mrpSpan.innerText = `₹${formatMoney(variant.price)}`;
+      if (variant) {
+        const info = getFinalPriceInfo(product, variant);
+        if (priceSpan) priceSpan.innerText = `₹${formatMoney(info.price)}`;
+        if (mrpSpan) mrpSpan.innerText = `₹${formatMoney(info.mrp)}`;
       }
     }
 
@@ -661,7 +668,7 @@
       const selectedIndex = selectElem ? parseInt(selectElem.value) : 0;
       const variant = product.variants[selectedIndex] || product.variants[0];
       const discountPercent = product.discountPercent || 0;
-      const finalPrice = getDiscountedPrice(variant.price, discountPercent);
+      const info = getFinalPriceInfo(product, variant);
 
       const cartItemId = `${productId}_${variant.unit}`;
       const existing = cart.find(c => c.cartItemId === cartItemId);
@@ -674,8 +681,8 @@
           id: productId, 
           name: product.name,
           unit: variant.unit, 
-          mrp: variant.price,
-          price: finalPrice, 
+          mrp: info.mrp,
+          price: info.price, 
           discountPercent: discountPercent, 
           qty: 1
         });
