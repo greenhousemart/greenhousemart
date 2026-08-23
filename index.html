@@ -640,6 +640,7 @@
       }
 
       let subtotal = 0;
+      let mrpSubtotal = 0;
       let totalDiscount = 0;
 
       let html = cart.map(item => {
@@ -647,7 +648,10 @@
         subtotal += itemTotal;
         if (item.discountPercent > 0) {
           const origPrice = Math.round(item.price / (1 - (item.discountPercent/100)));
+          mrpSubtotal += origPrice * item.qty;
           totalDiscount += (origPrice - item.price) * item.qty;
+        } else {
+          mrpSubtotal += itemTotal;
         }
         return `
           <div class="cart-item-row">
@@ -686,7 +690,7 @@
           <div class="bill-title">Order Summary & Bill</div>
           <div class="bill-row">
             <span>Subtotal</span>
-            <span>₹${subtotal}</span>
+            <span>₹${mrpSubtotal}</span>
           </div>
           ${totalDiscount > 0 ? `
           <div class="bill-row savings">
@@ -705,7 +709,7 @@
 
         ${isOutOfService ? `<div class="delivery-badge-note" style="background:#ffebee; border-left-color:#e53935; color:#c62828;">❌ Sorry, delivery is only available within 15 km radius.</div>` : ''}
 
-        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
+        <form class="checkout-form" onsubmit="handleCheckout(event, ${mrpSubtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
           
           <div class="form-group">
             <label><i class="fa-solid fa-map-location-dot" style="color:var(--primary);"></i> Select Delivery Location on Map *</label>
