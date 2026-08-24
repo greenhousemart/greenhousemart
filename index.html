@@ -30,7 +30,7 @@
   <meta name="twitter:description" content="Buy farm fresh fruits and organic vegetables online in Chennai with same-day home delivery.">
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=80">
 
-  <!-- STRUCTURED DATA FOR GOOGLE (LOCAL BUSINESS / ONLINE STORE) -->
+  <!-- STRUCTURED DATA FOR GOOGLE -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -132,6 +132,10 @@
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
     .product-card { background: #fff; border-radius: 12px; overflow: hidden; padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.2s; z-index: 2; }
 
+    /* OUT OF STOCK / SOLD OUT BLACK & WHITE DESIGN */
+    .product-card.out-of-stock { filter: grayscale(100%); opacity: 0.85; border-color: #bbb; background: #fafafa; }
+    .sold-out-badge { position: absolute; top: 10px; right: 10px; background: #333333; color: #ffffff; font-size: 11px; font-weight: 900; padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10; letter-spacing: 0.5px; }
+
     .skeleton-card { padding: 10px; gap: 8px; }
     .skeleton-img, .skeleton-line { background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%); background-size: 200% 100%; animation: skeleton-shimmer 1.2s infinite; border-radius: 6px; }
     .skeleton-img { width: 100%; height: 100px; margin-bottom: 8px; }
@@ -150,7 +154,7 @@
     .btn { background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; width: calc(100% - 16px); margin: 0 auto; font-size: 13px; transition: 0.2s; display: block; position: relative; z-index: 10; }
     .btn:active { transform: scale(0.97); }
     .btn:hover { background: var(--primary-dark); }
-    .btn:disabled { background: #aaa; cursor: not-allowed; }
+    .btn:disabled { background: #555 !important; cursor: not-allowed; }
 
     .cart-container-box { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border: 1px solid #e0ebe1; margin-top: 12px; }
     .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #e0e0e0; gap: 8px; }
@@ -589,21 +593,6 @@
       renderProducts(filtered);
     }
 
-    function getDiscountedPrice(mrp, discountPercent) {
-      if (!discountPercent || discountPercent <= 0) return roundMoney(mrp);
-      return roundMoney(mrp * (1 - discountPercent / 100));
-    }
-
-    // Combos already carry an explicit mrp + price from the sheet (Combo Price / MRP(Sum)),
-    // so that price IS the final charged amount - don't re-apply discount% on top of it.
-    // Regular products only carry a plain price (= MRP), so discount% must be applied forward.
-    function getFinalPriceInfo(product, variant) {
-      if (variant.mrp !== undefined && variant.mrp !== null && variant.mrp > 0) {
-        return { mrp: roundMoney(variant.mrp), price: roundMoney(variant.price) };
-      }
-      return { mrp: roundMoney(variant.price), price: getDiscountedPrice(variant.price, product.discountPercent) };
-    }
-
     function roundMoney(n) {
       return Math.round((Number(n) + Number.EPSILON) * 100) / 100;
     }
@@ -613,25 +602,30 @@
       return (Math.round(rounded * 100) % 100 === 0) ? String(Math.round(rounded)) : rounded.toFixed(2);
     }
 
+    // HOME CARD LOGIC: Shows ACTUAL PRICE (e.g. ₹60 in Green Color).
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
       if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
 
       grid.innerHTML = list.map(p => {
-        const firstInfo = getFinalPriceInfo(p, p.variants[0]);
+        const firstVariant = p.variants[0];
+        const actualPrice = roundMoney(firstVariant.price);
+        const isOutOfStock = !p.inStock;
+
         return `
-        <div class="product-card">
+        <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}">
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
+          ${isOutOfStock ? `<div class="sold-out-badge">SOLD OUT</div>` : ''}
           <img src="${p.image}" alt="${p.name} - buy online in Chennai" onerror="this.src='https://via.placeholder.com/150'">
           <h3>${p.name}</h3>
           ${p.description ? `<p class="item-desc">🥬 Includes: ${p.description}</p>` : ''}
-          <select id="variant_${p.id}" class="variant-select" onchange="updatePriceDisplay('${p.id}')">
+          <select id="variant_${p.id}" class="variant-select" onchange="updatePriceDisplay('${p.id}')" ${isOutOfStock ? 'disabled' : ''}>
             ${p.variants.map((v, i) => `<option value="${i}">${v.unit} - ₹${formatMoney(v.price)}</option>`).join('')}
           </select>
           <div class="price-block">
-            <span class="price" id="price_${p.id}">₹${formatMoney(firstInfo.price)}</span>
+            <span class="price" id="price_${p.id}">₹${formatMoney(actualPrice)}</span>
           </div>
-          <button class="btn" ${!p.inStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.inStock ? 'Add to Cart' : 'Out of Stock'}</button>
+          <button class="btn" ${isOutOfStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${!isOutOfStock ? 'Add to Cart' : 'Out of Stock'}</button>
         </div>
       `;
       }).join('');
@@ -644,14 +638,12 @@
       if (!selectElem) return;
       const variant = product.variants[selectElem.value];
       const priceSpan = document.getElementById(`price_${productId}`);
-      const mrpSpan = document.getElementById(`mrp_${productId}`);
-      if (variant) {
-        const info = getFinalPriceInfo(product, variant);
-        if (priceSpan) priceSpan.innerText = `₹${formatMoney(info.price)}`;
-        if (mrpSpan) mrpSpan.innerText = `₹${formatMoney(info.mrp)}`;
+      if (variant && priceSpan) {
+        priceSpan.innerText = `₹${formatMoney(variant.price)}`;
       }
     }
 
+    // CART LOGIC: Discount is calculated ONLY in the Cart
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       if (!product || !product.inStock) return;
@@ -660,7 +652,11 @@
       const selectedIndex = selectElem ? parseInt(selectElem.value) : 0;
       const variant = product.variants[selectedIndex] || product.variants[0];
       const discountPercent = product.discountPercent || 0;
-      const info = getFinalPriceInfo(product, variant);
+      
+      const actualPrice = roundMoney(variant.price);
+      const finalDiscountedPrice = discountPercent > 0 
+        ? roundMoney(actualPrice * (1 - discountPercent / 100)) 
+        : actualPrice;
 
       const cartItemId = `${productId}_${variant.unit}`;
       const existing = cart.find(c => c.cartItemId === cartItemId);
@@ -673,8 +669,8 @@
           id: productId, 
           name: product.name,
           unit: variant.unit, 
-          mrp: info.mrp,
-          price: info.price, 
+          mrp: actualPrice,
+          price: finalDiscountedPrice, 
           discountPercent: discountPercent, 
           qty: 1
         });
@@ -743,20 +739,18 @@
       }
 
       let subtotal = 0;
-      let mrpSubtotal = 0;
       let totalDiscount = 0;
 
       let html = cart.map(item => {
         const itemTotal = roundMoney(item.price * item.qty);
-        const itemMrp = roundMoney((item.mrp || item.price) * item.qty);
+        const itemMrp = roundMoney(item.mrp * item.qty);
         subtotal = roundMoney(subtotal + itemTotal);
-        mrpSubtotal = roundMoney(mrpSubtotal + itemMrp);
         totalDiscount = roundMoney(totalDiscount + (itemMrp - itemTotal));
         return `
           <div class="cart-item-row">
             <div class="cart-item-info">
               <h4>${item.name}</h4>
-              <span>${item.unit} • ₹${formatMoney(item.price)} per unit</span>
+              <span>${item.unit} • ₹${formatMoney(item.price)} per unit ${item.discountPercent > 0 ? `<small style="color:#d32f2f;">(${item.discountPercent}% OFF)</small>` : ''}</span>
             </div>
             <div class="qty-controls">
               <button class="qty-btn" onclick="updateCartQty('${item.cartItemId}', -1)">-</button>
@@ -885,11 +879,39 @@
         return;
       }
 
+      const submitBtn = document.getElementById("submitOrderBtn");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing Order...`;
+      }
+
       const name = document.getElementById("custName").value;
       const phone = document.getElementById("custPhone").value;
       const address = document.getElementById("custAddress").value;
       const pincode = document.getElementById("custPincode").value;
       const payMode = document.querySelector('input[name="payMode"]:checked').value;
+
+      const orderData = {
+        name: name,
+        phone: phone,
+        address: `${address}, Pincode: ${pincode}`,
+        mapUrl: userCoords.mapUrl,
+        paymentMethod: payMode,
+        paymentStatus: payMode === "UPI" ? "Paid Via UPI" : "Pending (COD)",
+        items: cart.map(c => ({
+          name: c.name,
+          unit: c.unit,
+          qty: c.qty,
+          totalPrice: roundMoney(c.price * c.qty)
+        }))
+      };
+
+      fetch(API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+      }).catch(err => console.warn("Order submit log error:", err));
 
       let bill = `*GREEN HOUSE FRESHMART - TAX INVOICE*\n`;
       bill += `----------------------------------------\n`;
