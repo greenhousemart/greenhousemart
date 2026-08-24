@@ -132,7 +132,7 @@
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
     .product-card { background: #fff; border-radius: 12px; overflow: hidden; padding-bottom: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; border: 1px solid #eaeaea; transition: all 0.2s; z-index: 2; }
 
-    /* OUT OF STOCK / SOLD OUT BLACK & WHITE DESIGN */
+    /* OUT OF STOCK STYLING */
     .product-card.out-of-stock { filter: grayscale(100%); opacity: 0.85; border-color: #bbb; background: #fafafa; }
     .sold-out-badge { position: absolute; top: 10px; right: 10px; background: #333333; color: #ffffff; font-size: 11px; font-weight: 900; padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10; letter-spacing: 0.5px; }
 
@@ -471,25 +471,10 @@
     document.addEventListener("DOMContentLoaded", function() {
       startLiveClock();
       startAutoSlider();
-      loadFromCacheInstantly();
       fetchLiveSheetData();
     });
 
-    const CACHE_KEY = "ghfm_cache_v1";
-
-    function loadFromCacheInstantly() {
-      try {
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (!cached) {
-          showProductSkeleton();
-          return;
-        }
-        const data = JSON.parse(cached);
-        applySheetData(data);
-      } catch (err) {
-        showProductSkeleton();
-      }
-    }
+    const CACHE_KEY = "ghfm_cache_v2";
 
     function showProductSkeleton() {
       const grid = document.getElementById("productGrid");
@@ -602,7 +587,7 @@
       return (Math.round(rounded * 100) % 100 === 0) ? String(Math.round(rounded)) : rounded.toFixed(2);
     }
 
-    // HOME CARD LOGIC: Shows ACTUAL PRICE (e.g. ₹60 in Green Color).
+    // HOME CARD RENDERING LOGIC
     function renderProducts(list) {
       const grid = document.getElementById("productGrid");
       if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
@@ -610,7 +595,7 @@
       grid.innerHTML = list.map(p => {
         const firstVariant = p.variants[0];
         const actualPrice = roundMoney(firstVariant.price);
-        const isOutOfStock = !p.inStock;
+        const isOutOfStock = (p.inStock === false);
 
         return `
         <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}">
@@ -643,10 +628,9 @@
       }
     }
 
-    // CART LOGIC: Discount is calculated ONLY in the Cart
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
-      if (!product || !product.inStock) return;
+      if (!product || product.inStock === false) return;
 
       const selectElem = document.getElementById(`variant_${productId}`);
       const selectedIndex = selectElem ? parseInt(selectElem.value) : 0;
