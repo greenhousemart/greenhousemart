@@ -44,7 +44,7 @@
       "@type": "City",
       "name": "Chennai"
     },
-    "servesCuisine": "Fresh Veggies and Fruits"
+    "servesCuisine": "Fresh Produce"
   }
   </script>
 
@@ -629,7 +629,6 @@
             ${p.variants.map((v, i) => `<option value="${i}">${v.unit} - ₹${formatMoney(v.price)}</option>`).join('')}
           </select>
           <div class="price-block">
-            ${p.discountPercent > 0 ? `<span class="mrp-strike" id="mrp_${p.id}" style="text-decoration:line-through; color:#999; font-size:12px; margin-right:6px;">₹${formatMoney(firstInfo.mrp)}</span>` : ''}
             <span class="price" id="price_${p.id}">₹${formatMoney(firstInfo.price)}</span>
           </div>
           <button class="btn" ${!p.inStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.inStock ? 'Add to Cart' : 'Out of Stock'}</button>
@@ -757,7 +756,7 @@
           <div class="cart-item-row">
             <div class="cart-item-info">
               <h4>${item.name}</h4>
-              <span>${item.unit} • ${item.discountPercent > 0 ? `<s style="color:#999;">₹${formatMoney(item.mrp)}</s> ` : ''}₹${formatMoney(item.price)} per unit</span>
+              <span>${item.unit} • ₹${formatMoney(item.price)} per unit</span>
             </div>
             <div class="qty-controls">
               <button class="qty-btn" onclick="updateCartQty('${item.cartItemId}', -1)">-</button>
@@ -790,7 +789,7 @@
           <div class="bill-title">Order Summary & Bill</div>
           <div class="bill-row">
             <span>Subtotal</span>
-            <span>₹${formatMoney(mrpSubtotal)}</span>
+            <span>₹${formatMoney(subtotal)}</span>
           </div>
           ${totalDiscount > 0 ? `
           <div class="bill-row savings">
@@ -809,7 +808,7 @@
 
         ${isOutOfService ? `<div class="delivery-badge-note" style="background:#ffebee; border-left-color:#e53935; color:#c62828;">❌ Sorry, delivery is only available within 15 km radius.</div>` : ''}
 
-        <form class="checkout-form" onsubmit="handleCheckout(event, ${mrpSubtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
+        <form class="checkout-form" onsubmit="handleCheckout(event, ${subtotal}, ${deliveryCharge}, ${grandTotal}, ${totalDiscount})">
           
           <div class="form-group">
             <label><i class="fa-solid fa-map-location-dot" style="color:var(--primary);"></i> Select Delivery Location on Map *</label>
