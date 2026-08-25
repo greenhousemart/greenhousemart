@@ -91,6 +91,10 @@
 
     header { position: fixed; top: 0; left: 0; right: 0; background: var(--surface); box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 999; padding: 8px 16px; transition: background-color 0.25s ease; }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { order: 1; }
+    .search-container { order: 2; }
+    .dark-toggle { order: 3; }
+    .desktop-nav { order: 4; }
     
     .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; transition: text-shadow 0.25s ease, color 0.25s ease; }
     .brand-logo { height: 34px; width: auto; display: block; }
@@ -115,12 +119,12 @@
       body { padding-top: 140px; }
       header { padding: 8px 10px 10px; }
       .header-container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
-      .brand { font-size: 15px; }
-      .desktop-nav { order: 2; width: 100%; justify-content: space-between; gap: 4px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--border-color); }
+      .brand { font-size: 15px; order: 1; }
+      .dark-toggle { order: 2; flex-shrink: 0; }
+      .desktop-nav { order: 3; width: 100%; justify-content: space-between; gap: 4px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--border-color); }
       .desktop-nav a { font-size: 11.5px; flex: 1; justify-content: center; padding: 4px 2px; }
       .desktop-nav a i { font-size: 14px; }
-      .dark-toggle { flex-shrink: 0; }
-      .search-container { order: 3; flex: 100%; width: 100%; max-width: 100%; margin-top: 4px; }
+      .search-container { order: 4; flex: 100%; width: 100%; max-width: 100%; margin-top: 4px; }
       .search-container input { padding: 6px 12px 6px 32px; font-size: 12px; }
     }
 
@@ -180,6 +184,10 @@
     .discount-badge { position: absolute; top: 8px; left: 8px; background: #e53935; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 5;}
     .product-card h3 { font-size: 14.5px; padding: 0 8px; color: var(--text); margin: 8px 0 2px; }
     .product-card .item-desc { font-size: 11px; color: #777; padding: 0 8px; margin: 0 0 6px; line-height: 1.4; }
+    .wishlist-heart { position: absolute; top: 8px; right: 8px; z-index: 6; background: rgba(255,255,255,0.85); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: #e53935; box-shadow: 0 1px 4px rgba(0,0,0,0.15); transition: transform 0.15s; }
+    .wishlist-heart:active { transform: scale(0.85); }
+    body.dark-mode .wishlist-heart { background: rgba(0,0,0,0.55); }
+    .wishlist-heart.active { color: #e53935; }
     .variant-select { width: calc(100% - 16px); margin: 4px auto 6px; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 12.5px; outline: none; background: var(--surface); color: var(--text); cursor: pointer; }
     
     .price-block { margin-bottom: 8px; }
@@ -298,15 +306,17 @@
         <span>Green House FreshMart</span>
       </a>
 
+      <button class="dark-toggle" id="darkModeToggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+
       <div class="search-container">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search fruits and vegetables..." onkeyup="filterProducts()">
       </div>
 
       <nav class="desktop-nav">
-        <button class="dark-toggle" id="darkModeToggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
         <a onclick="showSection('home')"><i class="fa-solid fa-house"></i> <span>Home</span></a>
         <a onclick="showSection('about')"><i class="fa-solid fa-circle-info"></i> <span>Our Story</span></a>
+        <a onclick="showSection('wishlist')"><i class="fa-solid fa-heart"></i> <span>Wishlist</span><span class="cart-badge" id="wishlistCount">0</span></a>
         <a onclick="showSection('cart')">
           <i class="fa-solid fa-cart-shopping"></i> <span>Cart</span>
           <span class="cart-badge" id="cartCount">0</span>
@@ -402,6 +412,12 @@
     <div id="cart" class="section">
       <h2 style="font-size: 18px; color: var(--text);">Your Shopping Cart</h2>
       <div id="cartItems" class="cart-container-box">Your cart is empty.</div>
+    </div>
+
+    <!-- WISHLIST PAGE -->
+    <div id="wishlist" class="section">
+      <h2 style="font-size: 18px; color: var(--text); margin-bottom:14px;">My Wishlist</h2>
+      <div id="wishlistGrid" class="product-grid"></div>
     </div>
 
     <!-- TERMS & CONDITIONS -->
@@ -543,6 +559,7 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       updateDarkModeIcon();
+      updateWishlistBadge();
       startLiveClock();
       startAutoSlider();
       loadFromCacheInstantly();
@@ -714,19 +731,17 @@
     }
 
     // HOME CARD RENDERING LOGIC
-    function renderProducts(list) {
-      const grid = document.getElementById("productGrid");
-      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
+    function buildProductCardHtml(p) {
+      const firstVariant = p.variants[0];
+      const actualPrice = roundMoney(firstVariant.price);
+      const isOutOfStock = (p.inStock === false);
+      const wished = isWished(p.id);
 
-      grid.innerHTML = list.map(p => {
-        const firstVariant = p.variants[0];
-        const actualPrice = roundMoney(firstVariant.price);
-        const isOutOfStock = (p.inStock === false);
-
-        return `
+      return `
         <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}">
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
           ${isOutOfStock ? `<div class="sold-out-badge">SOLD OUT</div>` : ''}
+          <button class="wishlist-heart ${wished ? 'active' : ''}" onclick="toggleWishlist('${p.id}', event)" aria-label="Toggle wishlist"><i class="fa-${wished ? 'solid' : 'regular'} fa-heart"></i></button>
           <img src="${p.image}" alt="${p.name} - buy online in Chennai" onerror="this.src='https://via.placeholder.com/150'">
           <h3>${p.name}</h3>
           ${p.description ? `<p class="item-desc">🥬 Includes: ${p.description}</p>` : ''}
@@ -739,7 +754,52 @@
           <button class="btn" ${isOutOfStock ? 'disabled' : ''} onclick="addToCart('${p.id}')">${!isOutOfStock ? 'Add to Cart' : 'Out of Stock'}</button>
         </div>
       `;
-      }).join('');
+    }
+
+    function renderProducts(list) {
+      const grid = document.getElementById("productGrid");
+      if (!list.length) { grid.innerHTML = "<p style='grid-column:1/-1;'>No products found.</p>"; return; }
+      grid.innerHTML = list.map(buildProductCardHtml).join('');
+    }
+
+    // ---- WISHLIST ----
+    let wishlist = [];
+    try { wishlist = JSON.parse(localStorage.getItem("ghfm_wishlist_v1") || "[]"); } catch (e) { wishlist = []; }
+
+    function isWished(productId) {
+      return wishlist.includes(productId);
+    }
+
+    function toggleWishlist(productId, event) {
+      if (event) event.stopPropagation();
+      const idx = wishlist.indexOf(productId);
+      if (idx === -1) {
+        wishlist.push(productId);
+        showToast("Added to wishlist ❤️");
+      } else {
+        wishlist.splice(idx, 1);
+        showToast("Removed from wishlist");
+      }
+      try { localStorage.setItem("ghfm_wishlist_v1", JSON.stringify(wishlist)); } catch (e) {}
+      updateWishlistBadge();
+      filterProducts(); // refresh heart icon on whichever grid is showing
+      const wishlistSection = document.getElementById("wishlist");
+      if (wishlistSection && wishlistSection.classList.contains("active")) renderWishlistPage();
+    }
+
+    function updateWishlistBadge() {
+      document.querySelectorAll(".wishlist-badge, #wishlistCount").forEach(el => el.innerText = wishlist.length);
+    }
+
+    function renderWishlistPage() {
+      const grid = document.getElementById("wishlistGrid");
+      if (!grid) return;
+      const wishedProducts = products.filter(p => wishlist.includes(p.id));
+      if (!wishedProducts.length) {
+        grid.innerHTML = "<p style='grid-column:1/-1; color:#666;'>Your wishlist is empty. Tap the ♡ on any product to save it here.</p>";
+        return;
+      }
+      grid.innerHTML = wishedProducts.map(buildProductCardHtml).join('');
     }
 
     function updatePriceDisplay(productId) {
@@ -1198,6 +1258,7 @@
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       if(id === 'cart') renderCart();
+      if(id === 'wishlist') renderWishlistPage();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
