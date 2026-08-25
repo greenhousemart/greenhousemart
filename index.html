@@ -316,7 +316,7 @@
         <h2 style="font-size: 16px;">Buy Fresh Vegetables and Fruits Online in Chennai</h2>
         <div class="filter-tabs">
           <button class="tab-btn active" onclick="setCategoryFilter('all', this)">All</button>
-          <button class="tab-btn" onclick="setCategoryFilter('combo', this)">Combo Offers <i class="fa-solid fa-fire" style="color:var(--accent-orange)"></i></button>
+          <button class="tab-btn" onclick="setCategoryFilter('greens', this)">Greens <i class="fa-solid fa-leaf" style="color:var(--primary)"></i></button>
           <button class="tab-btn" onclick="setCategoryFilter('fruits', this)">Fruits</button>
           <button class="tab-btn" onclick="setCategoryFilter('vegetables', this)">Vegetables</button>
         </div>
@@ -468,13 +468,28 @@
     let toastTimeout;
     let userCoords = { lat: "", lng: "", mapUrl: "", distanceKm: 0 };
 
+    const CACHE_KEY = "ghfm_cache_v2";
+
     document.addEventListener("DOMContentLoaded", function() {
       startLiveClock();
       startAutoSlider();
+      loadFromCacheInstantly();
       fetchLiveSheetData();
     });
 
-    const CACHE_KEY = "ghfm_cache_v2";
+    function loadFromCacheInstantly() {
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (!cached) {
+          showProductSkeleton();
+          return;
+        }
+        const data = JSON.parse(cached);
+        applySheetData(data);
+      } catch (err) {
+        showProductSkeleton();
+      }
+    }
 
     function showProductSkeleton() {
       const grid = document.getElementById("productGrid");
@@ -893,8 +908,9 @@
       fetch(API_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData)
+      }).then(() => {
+        console.log("Order submitted successfully");
       }).catch(err => console.warn("Order submit log error:", err));
 
       let bill = `*GREEN HOUSE FRESHMART - TAX INVOICE*\n`;
