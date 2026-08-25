@@ -226,6 +226,13 @@
     .story-card p { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
 
     .team-section-title { font-size: 18px; font-weight: 700; color: var(--text); margin: 20px 0 12px; border-left: 4px solid var(--accent-orange); padding-left: 8px; }
+
+    .journey-card { background: var(--surface); border-radius: 14px; padding: 22px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 25px; }
+    .journey-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 12px; }
+    .journey-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
+    .journey-card p b { color: var(--text); }
+    .journey-points { list-style: none; margin: 4px 0 16px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+    .journey-points li { font-size: 13px; color: var(--text); background: var(--accent-light); padding: 8px 12px; border-radius: 8px; }
     
     .owner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
     .owner-card { background: var(--surface); border-radius: 12px; padding: 16px 10px; text-align: center; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
@@ -374,6 +381,8 @@
             <p>Once you place your order, we confirm it, carefully pack the products, and arrange doorstep delivery within our service area fresh, safely and on time.</p>
           </div>
         </div>
+
+        <div id="ourJourneyContainer"></div>
 
         <h3 class="team-section-title">Leadership Team</h3>
         <div id="leadershipContainer" class="owner-grid"></div>
@@ -629,6 +638,45 @@
 
       if(leadershipContainer) leadershipContainer.innerHTML = leadershipHtml || "<p style='color:#666;'>No leadership details found.</p>";
       if(techContainer) techContainer.innerHTML = techHtml || "<p style='color:#666;'>No technology team details found.</p>";
+
+      renderOurJourney(owners);
+    }
+
+    // Builds the "Our Journey" story entirely from Owner sheet data - no names are
+    // ever hardcoded here. If names/designations change in the sheet, this updates
+    // automatically on the next page load.
+    function renderOurJourney(owners) {
+      const container = document.getElementById("ourJourneyContainer");
+      if (!container || !owners || !owners.length) return;
+
+      const isDev = (o) => /developer|tech|software/i.test(o.designation || "");
+      const founder = owners.find(o => !isDev(o)) || owners[0];
+      const otherLeaders = owners.filter(o => !isDev(o) && o !== founder);
+      const developers = owners.filter(isDev);
+
+      let html = `
+        <div class="journey-card">
+          <h3>Green House Fresh Mart – Our Journey</h3>
+          <p>We are proud to introduce Green House Fresh Mart, founded with a simple vision — to make fresh vegetables, fruits, and greens available to everyone at affordable prices.</p>
+          <p>I'm <b>${founder.name}</b>${founder.designation ? `, ${founder.designation}` : ''} of Green House Fresh Mart. The idea behind this business came from our everyday observation of market prices. We wanted to bring the same freshness to our customers at a more affordable price, without unnecessary middlemen.</p>
+          <p>With a small investment and a lot of hope, dedication, and hard work, we have started this journey. Our website is designed to make ordering simple, convenient, and affordable, so you can get your daily essentials without the hassle.</p>
+          <ul class="journey-points">
+            <li>🌱 Freshness straight from our farmers</li>
+            <li>🥦 Vegetables, fruits &amp; greens</li>
+            <li>💰 Affordable prices</li>
+            <li>🛒 Easy online ordering</li>
+            <li>🚚 Fresh products delivered to you</li>
+            <li>🤝 No unnecessary middlemen</li>
+          </ul>
+          <p><b>Remembering Our Team</b></p>
+          ${otherLeaders.map(o => `<p><b>${o.name}</b>${o.designation ? ` – ${o.designation}` : ''}</p>`).join('')}
+          ${developers.length ? `<p>And a special appreciation to our ${developers.length > 1 ? 'developers' : 'developer'}, ${developers.map(d => `<b>${d.name}</b>`).join(' and ')}, for ${developers.length > 1 ? 'their' : 'his/her'} valuable contribution in building our digital platform.</p>` : ''}
+          <p>This is just the beginning of our journey, and we are committed to serving you better and growing together with your support.</p>
+          <p>Keep supporting Green House Fresh Mart. ❤️<br>Order more. Stay fresh. Grow with us. 🌱<br>Freshness straight from our farmers to your home.</p>
+        </div>
+      `;
+
+      container.innerHTML = html;
     }
 
     function renderContacts(contacts) {
