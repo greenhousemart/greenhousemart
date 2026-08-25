@@ -1058,7 +1058,7 @@
                   <i class="fa-solid fa-map-pin" style="font-size:20px; color:#aaa; margin-bottom:4px; display:block;"></i>
                   Click 'Detect Location' above to load Google Map
                 </div>
-                <iframe id="mapIframe" src="${userCoords.lat ? `https://maps.google.com/maps?q=${userCoords.lat},${userCoords.lng}&z=16&output=embed` : ''}" style="${userCoords.lat ? 'display:block;' : 'display:none;'}"></iframe>
+                <iframe id="mapIframe" src="${userCoords.lat ? `https://maps.google.com/maps?q=${userCoords.lat},${userCoords.lng}&z=16&output=embed` : 'about:blank'}" style="${userCoords.lat ? 'display:block;' : 'display:none;'}"></iframe>
               </div>
             </div>
           </div>
