@@ -971,7 +971,7 @@
 
           <div class="form-group">
             <label><i class="fa-solid fa-calendar-days" style="color:var(--primary);"></i> Delivery Date *</label>
-            <input type="date" id="deliveryDate" min="${getISTDateString(0)}" max="${getISTDateString(MAX_ADVANCE_DAYS)}" value="${getISTDateString(0)}" onchange="updateSlotOptionsForDate()" required>
+            <input type="date" id="deliveryDate" min="${getISTDateString(0)}" max="${getISTDateString(MAX_ADVANCE_DAYS)}" value="${getISTDateString(0)}" onchange="updateSlotOptionsForDate()" onclick="if(this.showPicker){ this.showPicker(); }" required style="cursor:pointer;">
           </div>
 
           <div class="form-group">
