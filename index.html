@@ -208,7 +208,7 @@
     .checkout-form { margin-top: 16px; display: grid; gap: 12px; max-width: 100%; }
     .form-group { display: flex; flex-direction: column; gap: 5px; }
     .form-group label { font-size: 12px; font-weight: 700; color: var(--text); }
-    .checkout-form input, .checkout-form textarea { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--surface); color: var(--text); font-size: 13px; outline: none; }
+    .checkout-form input, .checkout-form textarea, .checkout-form select { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--surface); color: var(--text); font-size: 13px; outline: none; }
     .location-btn { background: var(--primary); color: #ffffff; border: none; padding: 11px; border-radius: 8px; font-weight: 700; font-size: 12.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
     .payment-options { display: flex; gap: 16px; margin-top: 4px; }
@@ -743,6 +743,55 @@
       renderCart();
     }
 
+    // ---- DELIVERY SLOTS (BigBasket-style, 6:30 AM - 6:30 PM window) ----
+    const DELIVERY_SLOT_DEFS = [
+      { start: 6 * 60 + 30, end: 9 * 60, label: "6:30 AM - 9:00 AM", period: "Morning" },
+      { start: 9 * 60, end: 11 * 60 + 30, label: "9:00 AM - 11:30 AM", period: "Morning" },
+      { start: 11 * 60 + 30, end: 14 * 60, label: "11:30 AM - 2:00 PM", period: "Afternoon" },
+      { start: 14 * 60, end: 16 * 60 + 30, label: "2:00 PM - 4:30 PM", period: "Afternoon" },
+      { start: 16 * 60 + 30, end: 18 * 60 + 30, label: "4:30 PM - 6:30 PM", period: "Evening" }
+    ];
+    const SLOT_PREP_BUFFER_MIN = 15; // a slot must end at least this many minutes from now to still be bookable
+
+    function getISTNow() {
+      const istString = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+      return new Date(istString);
+    }
+
+    function getAvailableDeliverySlots() {
+      const ist = getISTNow();
+      const nowMinutes = ist.getHours() * 60 + ist.getMinutes();
+
+      let dayLabel = "Today";
+      let slots = DELIVERY_SLOT_DEFS.filter(s => s.end > nowMinutes + SLOT_PREP_BUFFER_MIN);
+
+      if (slots.length === 0) {
+        dayLabel = "Tomorrow";
+        slots = DELIVERY_SLOT_DEFS;
+      }
+
+      return { dayLabel, slots };
+    }
+
+    function renderDeliverySlotOptions() {
+      const { dayLabel, slots } = getAvailableDeliverySlots();
+      const periods = ["Morning", "Afternoon", "Evening"];
+      let html = `<option value="" disabled selected>Select a delivery slot</option>`;
+
+      periods.forEach(period => {
+        const periodSlots = slots.filter(s => s.period === period);
+        if (!periodSlots.length) return;
+        html += `<optgroup label="${dayLabel} - ${period}">`;
+        periodSlots.forEach(s => {
+          const value = `${dayLabel}, ${s.label}`;
+          html += `<option value="${value}">${dayLabel}, ${s.label}</option>`;
+        });
+        html += `</optgroup>`;
+      });
+
+      return html;
+    }
+
     function calculateDistanceKm(lat1, lon1, lat2, lon2) {
       const R = 6371;
       const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -900,6 +949,13 @@
           </div>
 
           <div class="form-group">
+            <label><i class="fa-solid fa-clock" style="color:var(--primary);"></i> Delivery Slot *</label>
+            <select id="deliverySlot" required>
+              ${renderDeliverySlotOptions()}
+            </select>
+          </div>
+
+          <div class="form-group">
             <label>Payment Mode *</label>
             <div class="payment-options">
               <label class="payment-label">
@@ -933,6 +989,12 @@
         return;
       }
 
+      const deliverySlot = document.getElementById("deliverySlot").value;
+      if (!deliverySlot) {
+        alert("Please select a delivery slot.");
+        return;
+      }
+
       const submitBtn = document.getElementById("submitOrderBtn");
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -950,6 +1012,7 @@
         phone: phone,
         address: `${address}, Pincode: ${pincode}`,
         mapUrl: userCoords.mapUrl,
+        deliverySlot: deliverySlot,
         paymentMethod: payMode,
         paymentStatus: payMode === "UPI" ? "Paid Via UPI" : "Pending (COD)",
         items: cart.map(c => ({
@@ -974,6 +1037,7 @@
       bill += `*Phone:* ${phone}\n`;
       bill += `*Address:* ${address}, Pincode: ${pincode}\n`;
       bill += `*Google Map Location:* ${userCoords.mapUrl}\n`;
+      bill += `*Delivery Slot:* ${deliverySlot}\n`;
       bill += `----------------------------------------\n`;
       bill += `*ITEMS PURCHASED:*\n`;
 
