@@ -269,6 +269,7 @@
     .floating-controls { position: fixed; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
     .float-btn { width: 42px; height: 42px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; border: none; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
     .home-float { background: var(--primary); }
+    .call-float { background: #1976d2; }
     .whatsapp-float { background: var(--whatsapp); }
 
     #toast { visibility: hidden; min-width: 180px; background-color: #2e7d32; color: #fff; text-align: center; border-radius: 8px; padding: 8px 12px; position: fixed; z-index: 2000; right: 14px; top: 80px; opacity: 0; transition: 0.3s; font-size: 12px; font-weight: bold;}
@@ -481,6 +482,7 @@
 
   <div class="floating-controls">
     <button class="float-btn home-float" onclick="showSection('home')"><i class="fa-solid fa-arrow-up"></i></button>
+    <button class="float-btn call-float" onclick="callStore()" aria-label="Call us"><i class="fa-solid fa-phone"></i></button>
     <button class="float-btn whatsapp-float" onclick="openWhatsAppChat()"><i class="fa-brands fa-whatsapp"></i></button>
   </div>
 
@@ -743,53 +745,72 @@
       renderCart();
     }
 
-    // ---- DELIVERY SLOTS (BigBasket-style, 6:30 AM - 6:30 PM window) ----
+    // ---- DELIVERY SLOTS (BigBasket-style, 6:30 AM - 6:30 PM window, with a date picker) ----
     const DELIVERY_SLOT_DEFS = [
-      { start: 6 * 60 + 30, end: 9 * 60, label: "6:30 AM - 9:00 AM", period: "Morning" },
-      { start: 9 * 60, end: 11 * 60 + 30, label: "9:00 AM - 11:30 AM", period: "Morning" },
-      { start: 11 * 60 + 30, end: 14 * 60, label: "11:30 AM - 2:00 PM", period: "Afternoon" },
-      { start: 14 * 60, end: 16 * 60 + 30, label: "2:00 PM - 4:30 PM", period: "Afternoon" },
-      { start: 16 * 60 + 30, end: 18 * 60 + 30, label: "4:30 PM - 6:30 PM", period: "Evening" }
+      { end: 9 * 60, label: "6:30 AM - 9:00 AM", period: "Morning" },
+      { end: 11 * 60 + 30, label: "9:00 AM - 11:30 AM", period: "Morning" },
+      { end: 14 * 60, label: "11:30 AM - 2:00 PM", period: "Afternoon" },
+      { end: 16 * 60 + 30, label: "2:00 PM - 4:30 PM", period: "Afternoon" },
+      { end: 18 * 60 + 30, label: "4:30 PM - 6:30 PM", period: "Evening" }
     ];
     const SLOT_PREP_BUFFER_MIN = 15; // a slot must end at least this many minutes from now to still be bookable
+    const MAX_ADVANCE_DAYS = 6; // customers can schedule delivery up to this many days ahead
 
     function getISTNow() {
       const istString = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
       return new Date(istString);
     }
 
-    function getAvailableDeliverySlots() {
+    function getISTDateString(offsetDays) {
       const ist = getISTNow();
-      const nowMinutes = ist.getHours() * 60 + ist.getMinutes();
-
-      let dayLabel = "Today";
-      let slots = DELIVERY_SLOT_DEFS.filter(s => s.end > nowMinutes + SLOT_PREP_BUFFER_MIN);
-
-      if (slots.length === 0) {
-        dayLabel = "Tomorrow";
-        slots = DELIVERY_SLOT_DEFS;
-      }
-
-      return { dayLabel, slots };
+      ist.setDate(ist.getDate() + (offsetDays || 0));
+      const y = ist.getFullYear();
+      const m = String(ist.getMonth() + 1).padStart(2, "0");
+      const d = String(ist.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
     }
 
-    function renderDeliverySlotOptions() {
-      const { dayLabel, slots } = getAvailableDeliverySlots();
+    function formatDateLabel(dateStr) {
+      const d = new Date(dateStr + "T00:00:00");
+      return d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+    }
+
+    function getAvailableSlotsForDate(dateStr) {
+      const todayStr = getISTDateString(0);
+      if (dateStr !== todayStr) return DELIVERY_SLOT_DEFS; // future date - every slot is open
+
+      const ist = getISTNow();
+      const nowMinutes = ist.getHours() * 60 + ist.getMinutes();
+      return DELIVERY_SLOT_DEFS.filter(s => s.end > nowMinutes + SLOT_PREP_BUFFER_MIN);
+    }
+
+    function renderDeliverySlotOptions(dateStr) {
+      const slots = getAvailableSlotsForDate(dateStr);
+      if (!slots.length) {
+        return `<option value="" disabled selected>No slots left for this date - pick another date</option>`;
+      }
+
       const periods = ["Morning", "Afternoon", "Evening"];
       let html = `<option value="" disabled selected>Select a delivery slot</option>`;
 
       periods.forEach(period => {
         const periodSlots = slots.filter(s => s.period === period);
         if (!periodSlots.length) return;
-        html += `<optgroup label="${dayLabel} - ${period}">`;
+        html += `<optgroup label="${period}">`;
         periodSlots.forEach(s => {
-          const value = `${dayLabel}, ${s.label}`;
-          html += `<option value="${value}">${dayLabel}, ${s.label}</option>`;
+          html += `<option value="${s.label}">${s.label}</option>`;
         });
         html += `</optgroup>`;
       });
 
       return html;
+    }
+
+    function updateSlotOptionsForDate() {
+      const dateInput = document.getElementById("deliveryDate");
+      const slotSelect = document.getElementById("deliverySlot");
+      if (!dateInput || !slotSelect) return;
+      slotSelect.innerHTML = renderDeliverySlotOptions(dateInput.value);
     }
 
     function calculateDistanceKm(lat1, lon1, lat2, lon2) {
@@ -949,9 +970,14 @@
           </div>
 
           <div class="form-group">
+            <label><i class="fa-solid fa-calendar-days" style="color:var(--primary);"></i> Delivery Date *</label>
+            <input type="date" id="deliveryDate" min="${getISTDateString(0)}" max="${getISTDateString(MAX_ADVANCE_DAYS)}" value="${getISTDateString(0)}" onchange="updateSlotOptionsForDate()" required>
+          </div>
+
+          <div class="form-group">
             <label><i class="fa-solid fa-clock" style="color:var(--primary);"></i> Delivery Slot *</label>
             <select id="deliverySlot" required>
-              ${renderDeliverySlotOptions()}
+              ${renderDeliverySlotOptions(getISTDateString(0))}
             </select>
           </div>
 
@@ -989,11 +1015,13 @@
         return;
       }
 
-      const deliverySlot = document.getElementById("deliverySlot").value;
-      if (!deliverySlot) {
-        alert("Please select a delivery slot.");
+      const deliveryDateVal = document.getElementById("deliveryDate").value;
+      const deliverySlotVal = document.getElementById("deliverySlot").value;
+      if (!deliveryDateVal || !deliverySlotVal) {
+        alert("Please select a delivery date and slot.");
         return;
       }
+      const deliverySlot = `${formatDateLabel(deliveryDateVal)}, ${deliverySlotVal}`;
 
       const submitBtn = document.getElementById("submitOrderBtn");
       if (submitBtn) {
@@ -1125,6 +1153,15 @@
       if (phoneNum) {
         window.open(`https://wa.me/${phoneNum}?text=${encodeURIComponent("Hello Green House FreshMart, I need assistance.")}`, '_blank');
       }
+    }
+
+    function callStore() {
+      const phoneNum = appConfig.whatsappNumber;
+      if (!phoneNum) {
+        showToast("Phone number not available yet");
+        return;
+      }
+      window.location.href = `tel:+91${phoneNum}`;
     }
   </script>
 </body>
