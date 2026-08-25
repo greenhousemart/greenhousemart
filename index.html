@@ -87,7 +87,10 @@
     header { position: fixed; top: 0; left: 0; right: 0; background: var(--surface); box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 999; padding: 8px 16px; transition: background-color 0.25s ease; }
     .header-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     
-    .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
+    .brand { font-size: 18px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; transition: text-shadow 0.25s ease, color 0.25s ease; }
+
+    body.dark-mode .brand { color: #4ade80; text-shadow: 0 0 6px rgba(74, 222, 128, 0.65), 0 0 16px rgba(74, 222, 128, 0.4); }
+    body.dark-mode .brand i { text-shadow: 0 0 6px rgba(74, 222, 128, 0.65), 0 0 16px rgba(74, 222, 128, 0.4); }
 
     .search-container { position: relative; flex: 1; max-width: 450px; margin: 0 auto; }
     .search-container input { width: 100%; padding: 8px 12px 8px 36px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--surface-alt); color: var(--text); outline: none; font-size: 13px; }
