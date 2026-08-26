@@ -671,7 +671,7 @@
         const des = (o.designation || "").toLowerCase();
         const cardHtml = `
           <div class="owner-card">
-            <img src="${o.photo || 'https://via.placeholder.com/80'}" alt="${o.name}" onerror="this.src='https://via.placeholder.com/80'">
+            <img src="${o.photo || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Ccircle cx=%2240%22 cy=%2240%22 r=%2240%22 fill=%22%23e8f5e9%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2236%22 text-anchor=%22middle%22 dy=%22.35em%22 fill=%22%232e7d32%22%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E'}" alt="${o.name}" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Ccircle cx=%2240%22 cy=%2240%22 r=%2240%22 fill=%22%23e8f5e9%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2236%22 text-anchor=%22middle%22 dy=%22.35em%22 fill=%22%232e7d32%22%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E'">
             <h3>${o.name}</h3>
             <div class="designation-text">${o.designation}</div>
           </div>
@@ -767,7 +767,7 @@
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
           ${isOutOfStock ? `<div class="sold-out-badge">SOLD OUT</div>` : ''}
           <div class="card-img-wrap">
-            <img src="${p.image}" alt="${p.name} - buy online in Chennai" onerror="this.src='https://via.placeholder.com/150'">
+            <img src="${p.image}" alt="${p.name} - buy online in Chennai" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Crect width=%22150%22 height=%22150%22 fill=%22%23e8f5e9%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2242%22 text-anchor=%22middle%22 dy=%22.35em%22 fill=%22%232e7d32%22%3E%F0%9F%A5%AC%3C/text%3E%3C/svg%3E'">
             <button class="wishlist-heart ${wished ? 'active' : ''}" onclick="toggleWishlist('${p.id}', event)" aria-label="Toggle wishlist">${wished ? '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" stroke="none"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg>' : '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg>'}</button>
           </div>
           <h3>${p.name}</h3>
