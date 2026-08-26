@@ -183,11 +183,12 @@
     .skeleton-line { height: 10px; margin: 5px auto; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     
-    .product-card img { width: 100%; height: 150px; object-fit: cover; }
+    .card-img-wrap { position: relative; }
+    .product-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
     .discount-badge { position: absolute; top: 8px; left: 8px; background: #e53935; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 5;}
     .product-card h3 { font-size: 14.5px; padding: 0 8px; color: var(--text); margin: 8px 0 2px; }
     .product-card .item-desc { font-size: 11px; color: #777; padding: 0 8px; margin: 0 0 6px; line-height: 1.4; }
-    .wishlist-heart { position: absolute; top: 8px; right: 8px; z-index: 6; background: rgba(255,255,255,0.85); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: #e53935; box-shadow: 0 1px 4px rgba(0,0,0,0.15); transition: transform 0.15s; }
+    .wishlist-heart { position: absolute; bottom: 8px; right: 8px; z-index: 6; background: rgba(255,255,255,0.85); border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: #e53935; box-shadow: 0 1px 4px rgba(0,0,0,0.15); transition: transform 0.15s; }
     .wishlist-heart:active { transform: scale(0.85); }
     body.dark-mode .wishlist-heart { background: rgba(0,0,0,0.55); }
     .wishlist-heart.active { color: #e53935; }
@@ -347,7 +348,7 @@
         <div class="hero-slider-container">
           <div class="hero-slider-track" id="sliderTrack">
             <div class="slide-item">
-              <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=800&q=80" alt="Fresh vegetables online Chennai">
+              <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=800&q=80" alt="Fresh vegetables online Chennai" loading="lazy">
               <div class="slide-overlay">100% Organic Farm Fresh</div>
             </div>
             <div class="slide-item">
@@ -760,8 +761,10 @@
         <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}">
           ${p.discountPercent > 0 ? `<div class="discount-badge">${p.discountPercent}% OFF</div>` : ''}
           ${isOutOfStock ? `<div class="sold-out-badge">SOLD OUT</div>` : ''}
-          <button class="wishlist-heart ${wished ? 'active' : ''}" onclick="toggleWishlist('${p.id}', event)" aria-label="Toggle wishlist">${wished ? '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" stroke="none"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg>' : '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg>'}</button>
-          <img src="${p.image}" alt="${p.name} - buy online in Chennai" onerror="this.src='https://via.placeholder.com/150'">
+          <div class="card-img-wrap">
+            <img src="${p.image}" alt="${p.name} - buy online in Chennai" onerror="this.src='https://via.placeholder.com/150'">
+            <button class="wishlist-heart ${wished ? 'active' : ''}" onclick="toggleWishlist('${p.id}', event)" aria-label="Toggle wishlist">${wished ? '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" stroke="none"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg>' : '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg>'}</button>
+          </div>
           <h3>${p.name}</h3>
           ${p.description ? `<p class="item-desc">🥬 Includes: ${p.description}</p>` : ''}
           <select id="variant_${p.id}" class="variant-select" onchange="updatePriceDisplay('${p.id}')" ${isOutOfStock ? 'disabled' : ''}>
