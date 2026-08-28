@@ -116,7 +116,7 @@
     .desktop-nav { display: flex; align-items: center; gap: 16px; }
     .desktop-nav a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 5px; position: relative; white-space: nowrap; }
     .desktop-nav a i { font-size: 14px; color: var(--text); }
-    .cart-badge { background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
+    .count-badge { background: #e53935; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; padding: 2px 6px; margin-left: 2px; }
 
     @media (max-width: 768px) {
       body { padding-top: 158px; }
@@ -324,10 +324,10 @@
       <nav class="desktop-nav">
         <a onclick="showSection('home')"><span class="icon-glyph"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9v-6h6v6h2.5a1 1 0 0 0 1-1v-9"/></svg></span> <span>Home</span></a>
         <a onclick="showSection('about')"><span class="icon-glyph"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.7" r="0.9" fill="currentColor" stroke="none"/></svg></span> <span>Our Story</span></a>
-        <a onclick="showSection('wishlist')"><span class="icon-glyph"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg></span> <span>Wishlist</span><span class="cart-badge" id="wishlistCount">0</span></a>
+        <a onclick="showSection('wishlist')"><span class="icon-glyph"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21S3.5 15.5 2 10.9C1 7.8 2.7 4.7 5.6 3.9c2-.5 4 .3 5 2 1-1.7 3-2.5 5-2 2.9.8 4.6 3.9 3.6 7C17.7 15.5 12 21 12 21z"/></svg></span> <span>Wishlist</span><span class="count-badge wishlist-count-badge" id="wishlistCount">0</span></a>
         <a onclick="showSection('cart')">
           <span class="icon-glyph"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.3"/><circle cx="18" cy="21" r="1.3"/><path d="M1 1h3l2.6 13.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 6H6"/></svg></span> <span>Cart</span>
-          <span class="cart-badge" id="cartCount">0</span>
+          <span class="count-badge cart-count-badge" id="cartCount">0</span>
         </a>
       </nav>
     </div>
@@ -815,7 +815,7 @@
     }
 
     function updateWishlistBadge() {
-      document.querySelectorAll(".wishlist-badge, #wishlistCount").forEach(el => el.innerText = wishlist.length);
+      document.querySelectorAll(".wishlist-count-badge").forEach(el => el.innerText = wishlist.length);
     }
 
     function renderWishlistPage() {
@@ -1270,7 +1270,7 @@
 
     function updateCartBadge() {
       const totalCount = cart.reduce((acc, c) => acc + c.qty, 0);
-      document.querySelectorAll(".cart-badge").forEach(el => el.innerText = totalCount);
+      document.querySelectorAll(".cart-count-badge").forEach(el => el.innerText = totalCount);
     }
 
     function showToast(msg) {
