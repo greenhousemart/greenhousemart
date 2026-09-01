@@ -1183,7 +1183,7 @@
         mapUrl: userCoords.mapUrl,
         deliverySlot: deliverySlot,
         paymentMethod: payMode,
-        paymentStatus: payMode === "UPI" ? "Paid Via UPI" : "Pending (COD)",
+        paymentStatus: payMode === "UPI" ? "Paid" : "Pending",
         items: cart.map(c => ({
           name: c.name,
           unit: c.unit,
@@ -1225,7 +1225,7 @@
 
       if (payMode === "UPI") {
         bill += `*Payment Mode:* UPI\n`;
-        bill += `*Payment Status:* PAID VIA UPI\n`;
+        bill += `*Payment Status:* Paid\n`;
         bill += `----------------------------------------\n`;
         bill += `💚 Thank you for shopping with Green House FreshMart! Your fresh order will be delivered shortly.`;
 
@@ -1242,7 +1242,7 @@
 
       } else {
         bill += `*Payment Mode:* CASH ON DELIVERY\n`;
-        bill += `*Payment Status:* PENDING\n`;
+        bill += `*Payment Status:* Pending\n`;
         bill += `----------------------------------------\n`;
         bill += `💚 Thank you for your order! Please keep ₹${formatMoney(grandTotal)} ready in cash for delivery.`;
 
