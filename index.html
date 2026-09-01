@@ -1027,18 +1027,13 @@
         `;
       }).join('');
 
-      let deliveryCharge = 0;
+      let deliveryCharge = 40;
       let isOutOfService = false;
       const dist = userCoords.distanceKm;
 
       if (dist > 15) {
         isOutOfService = true;
-      } else if (dist > 10) {
-        deliveryCharge = 30;
-      } else if (dist > 5) {
-        deliveryCharge = 20;
-      } else {
-        deliveryCharge = subtotal >= 120 ? 0 : 20;
+        deliveryCharge = 0;
       }
 
       const grandTotal = roundMoney(subtotal + deliveryCharge);
@@ -1057,7 +1052,7 @@
           </div>` : ''}
           <div class="bill-row">
             <span>Delivery Charge ${dist > 0 ? `(~${dist.toFixed(1)} km)` : ''}</span>
-            <span>${deliveryCharge === 0 ? '<strong style="color:green;">FREE</strong>' : '₹' + formatMoney(deliveryCharge)}</span>
+            <span>${isOutOfService ? '--' : '₹' + formatMoney(deliveryCharge)}</span>
           </div>
           <div class="bill-row grand-total">
             <span>Grand Total</span>
